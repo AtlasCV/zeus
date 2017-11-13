@@ -1,0 +1,18 @@
+type: object
+  properties:
+    id:
+      type: integer
+    linkedIn:
+      type: string
+    aboutMe:
+      type: string
+    desiredInsutry:
+      type: array
+    certifications:
+      type: array
+    skills:
+      type: array
+    transcript:
+      type: string
+    profilePhoto:
+      type: string
