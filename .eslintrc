@@ -1,0 +1,22 @@
+{
+  "rules": {
+      "import/newline-after-import": 0,
+      "no-confusing-arrow": ["error", {"allowParens": true}],
+      "comma-dangle": ["error", "never"]
+  },
+  "extends": "airbnb-base",
+  "plugins": [
+      "import",
+      "jasmine",
+      "jsx-a11y",
+      "mocha",
+      "react"
+  ],
+  "globals": {
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  }

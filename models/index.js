@@ -1,25 +1,29 @@
-'use strict';
+"use strict";
 
-const fs        = require('fs');
-const path      = require('path');
-const Sequelize = require('sequelize');
-const basename  = path.basename(module.filename);
-const env       = process.env.NODE_ENV || 'development';
-const config    = require('../config/dbconfig.js')[env];
-const db        = {};
+const fs = require("fs");
+const path = require("path");
+const Sequelize = require("sequelize");
+const basename = path.basename(module.filename);
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config.js")[env];
+const db = {};
 
-
-
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
-
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    return (
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+    );
   })
   .forEach(function(file) {
-    const model = sequelize['import'](path.join(__dirname, file));
+    const model = sequelize["import"](path.join(__dirname, file));
     db[model.name] = model;
   });
 
@@ -32,7 +36,6 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-
 (({
   Applicant,
   EducationExperience,
@@ -42,54 +45,60 @@ db.Sequelize = Sequelize;
   Match,
   User,
   Skill,
-  Certification,
+  Certification
 }) => {
-
   Applicant.belongsTo(User);
-  Applicant.belongsTo(EducationExperience);
-  Applicant.belongsTo(JobExperience);
-  Applicant.belongsTo(Match);
-  
   User.hasOne(Applicant);
 
-  Job.belongsToMany(Applicant, { through: 'ApplicantJob' });
-  Applicant.belongsToMany(Job, { through: 'ApplicantJob' });
-  
+  JobExperience.belongsTo(Applicant);
+  Applicant.hasMany(JobExperience);
+
+  EducationExperience.belongsTo(Applicant);
+  Applicant.hasMany(EducationExperience);
+
+  Match.belongsTo(Applicant);
+  Applicant.hasMany(Match);
+
   Job.belongsTo(Industry);
   Industry.hasMany(Job);
 
-  Applicant.belongsToMany(Industry, { through: 'ApplicantIndustry' });
-  Industry.belongsToMany(Applicant, { through: 'ApplicantIndustry'});
+  Job.belongsToMany(Applicant, { through: "ApplicantJob" });
+  Applicant.belongsToMany(Job, { through: "ApplicantJob" });
 
-  JobExperience.hasOne(Applicant);
-  EducationExperience.hasOne(Applicant);
+  Applicant.belongsToMany(Industry, { through: "ApplicantIndustry" });
+  Industry.belongsToMany(Applicant, { through: "ApplicantIndustry" });
 
-  Applicant.belongsToMany(Certification, { through: 'ApplicantCertification'})
-  Certification.belongsToMany(Applicant, { through: 'ApplicantCertification'})
+  Applicant.belongsToMany(Certification, { through: "ApplicantCertification" });
+  Certification.belongsToMany(Applicant, { through: "ApplicantCertification" });
 
-  Applicant.belongsToMany(Skill, { through: 'ApplicantSkill'})
-  Skill.belongsToMany(Applicant, { through: 'ApplicantSkill'})
-
-
-
+  Applicant.belongsToMany(Skill, { through: "ApplicantSkill" });
+  Skill.belongsToMany(Applicant, { through: "ApplicantSkill" });
 })(db);
 
 function sync(force) {
-  const syncOrAuthenticate = (env === 'test' || env === 'circle_test') ? db.sequelize.sync({ force }) : db.sequelize.authenticate();
+  const syncOrAuthenticate =
+    env === "test" || env === "circle_test"
+      ? db.sequelize.sync({ force })
+      : db.sequelize.authenticate();
 
   return syncOrAuthenticate
-    .then(() => console.log(`${env === 'test' ? 'Synced' : 'Authenticated'} models to db in ${env} env`))
-    .catch((fail) => {
+    .then(() =>
+      console.log(
+        `${env === "test"
+          ? "Synced"
+          : "Authenticated"} models to db in ${env} env`
+      )
+    )
+    .catch(fail => {
       if (fail) {
-        console.error('********** database error ***********');
-        console.error('    Could not connect to database');
+        console.error("********** database error ***********");
+        console.error("    Could not connect to database");
         console.error(fail);
-        console.error('*************************************');
+        console.error("*************************************");
         return;
       }
     });
 }
-
 
 db.didSync = sync();
 
