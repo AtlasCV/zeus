@@ -46,7 +46,7 @@ securityDefinitions:
     description: AtlasCV admins and employers
 paths:
   /applicants:
-    x-swagger-router-controller: applicant
+    x-swagger-router-controller: applicants
     get:
       description: Get all applicants
       operationId: getAllApplicants
