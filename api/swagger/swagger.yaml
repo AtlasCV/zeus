@@ -60,7 +60,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     post:
-      x-swagger-router-controller: applicant
+      x-swagger-router-controller: applicants
       description: Creates a new applicant
       operationId: createApplicant
       parameters:
@@ -95,7 +95,7 @@ paths:
             $ref: '#/definitions/ErrorResponse'
   /applicants/{applicantId}:
     get:
-      x-swagger-router-controller: applicant
+      x-swagger-router-controller: applicants
       description: Get all applicants
       operationId: getApplicant
       parameters:
@@ -114,7 +114,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     put:
-      x-swagger-router-controller: applicant
+      x-swagger-router-controller: applicants
       description: update an existing applicant
       operationId: updateApplicant
       parameters:
