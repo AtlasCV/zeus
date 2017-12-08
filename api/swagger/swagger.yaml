@@ -3,47 +3,49 @@ info:
   version: "0.0.1"
   title: Backend for AtlasCV
 host: localhost:10013
-basePath: /api
+basePath: /
 schemes:
   # tip: remove http to make production-grade
   - http
   - https
 consumes:
   - application/json
-# format of the responses to the client (Accepts)
+  - text/html
+  - application/x-www-form-urlencoded
 produces:
   - application/json
-securityDefinitions:
-  applicantsAndEmployers:
-    name: Authorization
-    type: apiKey
-    in: header
-    description: applicants and employers
-  applicantsOnly:
-    name: Authorization
-    type: apiKey
-    in: header
-    description: applicant accounts only
-  employersOnly:
-    name: Authorization
-    type: apiKey
-    in: header
-    description: employer accounts only
-  anyUser:
-    name: Authorization
-    type: apiKey
-    in: header
-    description: any user
-  admin:
-    name: Authorization
-    type: apiKey
-    in: header
-    description: AtlasCV admin account
-  adminAndEmployers:
-    name: Authorization
-    type: apiKey
-    in: header
-    description: AtlasCV admins and employers
+  - text/html
+# securityDefinitions:
+#   applicantsAndEmployers:
+#     name: Authorization
+#     type: apiKey
+#     in: header
+#     description: applicants and employers
+#   applicantsOnly:
+#     name: Authorization
+#     type: apiKey
+#     in: header
+#     description: applicant accounts only
+#   employersOnly:
+#     name: Authorization
+#     type: apiKey
+#     in: header
+#     description: employer accounts only
+#   anyUser:
+#     name: Authorization
+#     type: apiKey
+#     in: header
+#     description: any user
+#   admin:
+#     name: Authorization
+#     type: apiKey
+#     in: header
+#     description: AtlasCV admin account
+#   adminAndEmployers:
+#     name: Authorization
+#     type: apiKey
+#     in: header
+#     description: AtlasCV admins and employers
 paths:
   /applicants:
     x-swagger-router-controller: applicants
@@ -74,15 +76,12 @@ paths:
               - firstName
               - lastName
               - email
-              - linkedIn
             properties:
               firstName:
                 type: string
               lastName:
                 type: string
               email:
-                type: string
-              linkedIn:
                 type: string
       responses:
         "201":
@@ -94,14 +93,14 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
   /applicants/{applicantId}:
+    x-swagger-router-controller: applicants
     get:
-      x-swagger-router-controller: applicants
       description: Get all applicants
-      operationId: getApplicant
+      operationId: getApplicantById
       parameters:
         - name: applicantId
           in: path
-          description: id of the applicant being updated
+          description: id of the applicant being retrieved
           required: true
           type: string
       responses:
@@ -114,7 +113,6 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     put:
-      x-swagger-router-controller: applicants
       description: update an existing applicant
       operationId: updateApplicant
       parameters:

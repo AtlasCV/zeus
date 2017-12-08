@@ -267,7 +267,7 @@ module.exports = {
           createdAt: Sequelize.DATE,
           updatedAt: Sequelize.DATE
         }),
-        queryInterface.addColumn("Applicants", "userId", {
+        queryInterface.addColumn("Applicants", "UserId", {
           type: Sequelize.INTEGER,
           references: {
             model: "Users",
@@ -276,7 +276,7 @@ module.exports = {
           onUpdate: "cascade",
           onDelete: "cascade"
         }),
-        queryInterface.addColumn("EducationExperiences", "applicantId", {
+        queryInterface.addColumn("EducationExperiences", "ApplicantId", {
           type: Sequelize.INTEGER,
           references: {
             model: "Applicants",
@@ -285,7 +285,7 @@ module.exports = {
           onUpdate: "cascade",
           onDelete: "cascade"
         }),
-        queryInterface.addColumn("JobExperiences", "applicantId", {
+        queryInterface.addColumn("JobExperiences", "ApplicantId", {
           type: Sequelize.INTEGER,
           references: {
             model: "Applicants",
@@ -294,7 +294,7 @@ module.exports = {
           onUpdate: "cascade",
           onDelete: "cascade"
         }),
-        queryInterface.addColumn("Matches", "applicantId", {
+        queryInterface.addColumn("Matches", "ApplicantId", {
           type: Sequelize.INTEGER,
           references: {
             model: "Applicants",
@@ -303,7 +303,7 @@ module.exports = {
           onUpdate: "cascade",
           onDelete: "cascade"
         }),
-        queryInterface.addColumn("Jobs", "industryId", {
+        queryInterface.addColumn("Jobs", "IndustryId", {
           type: Sequelize.INTEGER,
           references: {
             model: "Industries",

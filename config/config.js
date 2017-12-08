@@ -26,31 +26,13 @@ module.exports = {
     logging: false,
     dialect: "postgres"
   },
-  "eb-development": {
+  staging: {
     username: "root",
     password: "superroot",
     database: "ebdb",
-    host: "",
-    port: "5432",
-    logging: true,
-    dialect: "postgres"
-  },
-  "eb-production": {
-    username: "root",
-    password: "superroot",
-    database: "ebdb",
-    host: "eos-prod.cp1tv2snnys7.us-east-1.rds.amazonaws.com",
+    host: "aa1pzrz55tsv3zp.cedtvuslgbbr.us-east-1.rds.amazonaws.com",
     port: "5432",
     logging: false,
-    dialect: "postgres"
-  },
-  "eb-staging": {
-    username: "root",
-    password: "superroot",
-    database: "ebdb",
-    host: "aa1lmpiuodxl30z.cp1tv2snnys7.us-east-1.rds.amazonaws.com",
-    port: "5432",
-    logging: true,
     dialect: "postgres"
   }
 };

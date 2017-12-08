@@ -3,11 +3,15 @@ const db = require("../../models");
 const { Applicant, User } = db;
 
 const getAllApplicants = (req, res, next) => {
-  Promise.all([Applicant.findAll()])
+  Applicant.findAll({
+    include: [User],
+    attributes: { exclude: ["salt", "hashedPassword"] }
+  })
     .then(applicants => {
       res.json({
-        message: "Successfully retrieved applicants!",
-        applicants
+        successful: true,
+        data: { applicants },
+        status: 200
       });
     })
     .catch(next);
@@ -15,41 +19,52 @@ const getAllApplicants = (req, res, next) => {
 
 const getApplicantById = (req, res, next) => {
   const applicantId = req.swagger.params.applicantId.value;
-  Applicant.findById(applicantId)
+  Applicant.findById(applicantId, {
+    include: [User],
+    attributes: { exclude: ["salt", "hashedPassword"] }
+  })
     .then(applicant => {
       if (!applicant) throw Error("Applicant with this id does not exist!");
       res.json({
-        message: "Successfully retrieved applicant!",
-        applicants: applicant
+        data: { applicant },
+        successful: true,
+        status: 200
       });
     })
     .catch(next);
 };
 
 const createApplicant = (req, res, next) => {
-  const { email, firstName, lastName } = req.swagger.params.data.value;
+  const { email, firstName, lastName, linkedIn } = req.body;
   const newApplicantProps = { linkedIn };
   const newUserProps = { firstName, lastName, email };
 
   User.findOne({ where: { email } })
     .then(applicant => {
-      if (applicant)
-        throw errorWithStatus("Applicant with this email already exists", 400);
+      if (applicant) {
+        throw new Error("Applicant with this email already exists");
+      }
       return Promise.all([
         Applicant.create(newApplicantProps),
         User.create(newUserProps)
       ]);
     })
-    .then(([applicant, user]) =>
-      Promise.all([applicant.update({ userId: user.id }), user])
-    )
-    .then(([applicant, user]) =>
-      res.json({
-        message: "Successfully created applicant",
-        applicant: { ...applicant, user },
-        status: 201
+    .then(([applicant, user]) => applicant.setUser(user))
+    .then(applicant =>
+      applicant.getUser({
+        include: [Applicant],
+        attributes: { exclude: ["salt", "hashedPassword"] }
       })
     )
+    .then(user => {
+      res.json({
+        successful: true,
+        data: {
+          user
+        },
+        status: 201
+      });
+    })
     .catch(next);
 };
 
@@ -68,17 +83,21 @@ const updateApplicant = (req, res, next) => {
     gender,
     phone,
     birthday,
-    profileImgUrl
+    profileImgUrl,
+    linkedIn
   } = req.swagger.params.data.value;
   const applicantId = req.swagger.params.applicantId.value;
 
-  Promise.all([
-    Applicant.findById(applicant.id),
-    User.findOne({ where: { applicantId } })
-  ])
-    .then(([applicant, user]) => {
-      if (!applicant || !user) {
+  Applicant.findById(applicantId)
+    .then(applicant => {
+      if (!applicant) {
         throw Error("This applicant does not exist!");
+      }
+      return Promise.all([applicant.getUser(), applicant]);
+    })
+    .then(([user, applicant]) => {
+      if (!user) {
+        throw Error("This user does not exist!");
       }
       const applicantProps = {
         linkedIn: linkedIn || applicant.linkedIn,
@@ -100,13 +119,15 @@ const updateApplicant = (req, res, next) => {
         user.updateAttributes(userProps)
       ]);
     })
-    .then(([applicant, user]) => {
-      if (!applicant || !user) {
+    .then(([applicant, user]) => applicant.getUser({ include: [Applicant] }))
+    .then(user => {
+      if (!user) {
         throw Error("This applicant was not updated successfully!");
       }
       res.json({
         message: "Successfully updated applicant",
-        applicant: { ...applicant, user }
+        data: { user },
+        successful: true
       });
     })
     .catch(next);

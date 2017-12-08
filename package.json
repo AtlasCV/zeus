@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "start:dev": "NODE_ENV=development sequelize db:migrate && npm start"
+    "start:dev": "NODE_ENV=development sequelize db:migrate && NODE_ENV=development nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +29,8 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "swagger-express-mw": "^0.7.0",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "volleyball": "^1.4.1"
   },
   "devDependencies": {
     "body-parser": "^1.17.1",
