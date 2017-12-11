@@ -38,6 +38,7 @@ db.Sequelize = Sequelize;
 
 (({
   Applicant,
+  ApplicantSkill,
   EducationExperience,
   Industry,
   Job,
@@ -59,6 +60,9 @@ db.Sequelize = Sequelize;
   Match.belongsTo(Applicant);
   Applicant.hasMany(Match);
 
+  Match.belongsTo(Job);
+  Job.hasMany(Match);
+
   Job.belongsTo(Industry);
   Industry.hasMany(Job);
 
@@ -71,8 +75,11 @@ db.Sequelize = Sequelize;
   Applicant.belongsToMany(Certification, { through: "ApplicantCertification" });
   Certification.belongsToMany(Applicant, { through: "ApplicantCertification" });
 
-  Applicant.belongsToMany(Skill, { through: "ApplicantSkill" });
-  Skill.belongsToMany(Applicant, { through: "ApplicantSkill" });
+  ApplicantSkill.belongsTo(Applicant);
+  ApplicantSkill.belongsTo(Skill);
+
+  Skill.hasMany(ApplicantSkill);
+  Applicant.hasMany(ApplicantSkill);
 })(db);
 
 function sync(force) {
@@ -84,9 +91,9 @@ function sync(force) {
   return syncOrAuthenticate
     .then(() =>
       console.log(
-        `${env === "test"
-          ? "Synced"
-          : "Authenticated"} models to db in ${env} env`
+        `${
+          env === "test" ? "Synced" : "Authenticated"
+        } models to db in ${env} env`
       )
     )
     .catch(fail => {
