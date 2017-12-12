@@ -199,6 +199,39 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /applicants/{applicantId}/industries:
+    post:
+      x-swagger-router-controller: industries
+      description: Adds a desired industries for an applicant
+      operationId: addIndustriesToApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - industryIds
+            properties:
+              industryIds:
+                type: array
+                items:
+                  type: number
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
 
 definitions:
   ErrorResponse:
