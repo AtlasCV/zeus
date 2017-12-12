@@ -136,22 +136,10 @@ paths:
               type: string
             city:
               type: string
-            skills:
-              type: array
-              items:
-                type: integer
             profilePhoto:
               type: string
             transcript:
               type: string
-            certifications:
-              type: array
-              items:
-                type: integer
-            desiredIndustry:
-              type: array
-              items:
-                type: integer
             aboutMe:
               type: string
             gender:
@@ -173,6 +161,45 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /applicants/{applicantId}/skills:
+    post:
+      x-swagger-router-controller: skills
+      description: Adds a skill for an applicant
+      operationId: addSkillsToApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - skills
+            properties:
+              skills:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: number
+                    experience:
+                      type: string
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
 definitions:
   ErrorResponse:
     required:

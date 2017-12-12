@@ -74,11 +74,8 @@ const updateApplicant = (req, res, next) => {
     lastName,
     email,
     city,
-    skills,
     profilePhoto,
     transcript,
-    certifications,
-    desiredIndustry,
     aboutMe,
     gender,
     phone,
@@ -125,7 +122,7 @@ const updateApplicant = (req, res, next) => {
         throw Error("This applicant was not updated successfully!");
       }
       res.json({
-        message: "Successfully updated applicant",
+        status: 201,
         data: { user },
         successful: true
       });

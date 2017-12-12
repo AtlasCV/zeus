@@ -25,7 +25,9 @@ module.exports = {
         city: {
           type: Sequelize.STRING,
           allowNull: true
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("Certifications", {
         id: {
@@ -37,7 +39,9 @@ module.exports = {
         name: {
           type: Sequelize.STRING,
           allowNull: false
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("EducationExperiences", {
         id: {
@@ -61,7 +65,9 @@ module.exports = {
         university: {
           type: Sequelize.STRING,
           allowNull: true
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("Industries", {
         id: {
@@ -73,7 +79,9 @@ module.exports = {
         name: {
           type: Sequelize.STRING,
           allowNull: false
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("Jobs", {
         id: {
@@ -85,7 +93,9 @@ module.exports = {
         name: {
           type: Sequelize.STRING,
           allowNull: false
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("JobExperiences", {
         id: {
@@ -110,7 +120,9 @@ module.exports = {
         description: {
           type: Sequelize.TEXT,
           allowNull: true
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("Matches", {
         id: {
@@ -122,7 +134,9 @@ module.exports = {
         matchScore: {
           type: Sequelize.STRING,
           allowNull: false
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("Skills", {
         id: {
@@ -134,7 +148,9 @@ module.exports = {
         name: {
           type: Sequelize.STRING,
           allowNull: false
-        }
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }),
       queryInterface.createTable("Users", {
         id: {
@@ -175,12 +191,14 @@ module.exports = {
           allowNull: true
         },
         hashed_password: Sequelize.STRING,
-        salt: Sequelize.STRING
+        salt: Sequelize.STRING,
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       })
     ]).then(() =>
       Promise.all([
         queryInterface.createTable("ApplicantJob", {
-          applicantId: {
+          ApplicantId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Applicants",
@@ -189,7 +207,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
-          jobId: {
+          JobId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Jobs",
@@ -202,7 +220,7 @@ module.exports = {
           updatedAt: Sequelize.DATE
         }),
         queryInterface.createTable("ApplicantIndustry", {
-          applicantId: {
+          ApplicantId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Applicants",
@@ -211,7 +229,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
-          industryId: {
+          IndustryId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Industries",
@@ -224,7 +242,7 @@ module.exports = {
           updatedAt: Sequelize.DATE
         }),
         queryInterface.createTable("ApplicantCertification", {
-          applicantId: {
+          ApplicantId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Applicants",
@@ -233,7 +251,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
-          certificationid: {
+          Certificationid: {
             type: Sequelize.INTEGER,
             references: {
               model: "Certifications",
@@ -245,8 +263,14 @@ module.exports = {
           createdAt: Sequelize.DATE,
           updatedAt: Sequelize.DATE
         }),
-        queryInterface.createTable("ApplicantSkill", {
-          applicantId: {
+        queryInterface.createTable("ApplicantSkills", {
+          id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true
+          },
+          ApplicantId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Applicants",
@@ -255,7 +279,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
-          skillId: {
+          SkillId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Skills",
@@ -264,6 +288,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
+          yearsExperience: Sequelize.STRING,
           createdAt: Sequelize.DATE,
           updatedAt: Sequelize.DATE
         }),
@@ -298,6 +323,15 @@ module.exports = {
           type: Sequelize.INTEGER,
           references: {
             model: "Applicants",
+            key: "id"
+          },
+          onUpdate: "cascade",
+          onDelete: "cascade"
+        }),
+        queryInterface.addColumn("Matches", "JobId", {
+          type: Sequelize.INTEGER,
+          references: {
+            model: "Jobs",
             key: "id"
           },
           onUpdate: "cascade",
