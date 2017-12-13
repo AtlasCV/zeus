@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: true
     },
     gpa: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true
     },
     educationLevel: {
