@@ -55,7 +55,7 @@ module.exports = {
           allowNull: true
         },
         gpa: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING,
           allowNull: true
         },
         educationLevel: {

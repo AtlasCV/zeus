@@ -232,7 +232,46 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-
+  /applicants/{applicantId}/education:
+    post:
+      x-swagger-router-controller: education
+      description: Adds education experience
+      operationId: addEducationToApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create education for an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - areaOfStudy
+              - gpa
+              - educationLevel
+              - university
+            properties:
+              areaOfStudy:
+                type: string
+              gpa:
+                type: string
+              educationLevel:
+                type: string
+              university:
+                type: string
+      responses:
+        "201":
+          description: Successfully create and associate education with applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
 definitions:
   ErrorResponse:
     required:
