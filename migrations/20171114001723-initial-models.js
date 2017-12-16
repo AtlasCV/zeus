@@ -190,6 +190,11 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: true
         },
+        activated: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: false
+        },
         hashed_password: Sequelize.STRING,
         salt: Sequelize.STRING,
         createdAt: Sequelize.DATE,

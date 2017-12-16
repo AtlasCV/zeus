@@ -272,6 +272,66 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /user/{userId}/confirm:
+    put:
+      x-swagger-router-controller: users
+      description: Confirms the signup for a user with their password
+      operationId: confirmUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: the
+          type: number
+        - name: data
+          in: body
+          description: data required to confirm a user
+          required: true
+          schema:
+            type: object
+            required:
+              - password
+            properties:
+              password:
+                type: string
+      responses:
+        "200":
+          description: Successfully confirm a user with a password
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /login:
+    post:
+      x-swagger-router-controller: users
+      description: logs in the user
+      operationId: login
+      parameters:
+        - name: data
+          in: body
+          description: data required to log in a user
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        "200":
+          description: Successfully confirm a user with a password
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
 definitions:
   ErrorResponse:
     required:

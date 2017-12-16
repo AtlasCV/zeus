@@ -41,9 +41,14 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.STRING,
         allowNull: true
       },
+      activated: {
+        type: DataTypes.BOOLEAN,
+        required: true,
+        devaultValue: false
+      },
       password: {
         type: DataTypes.VIRTUAL,
-        set: function set(val) {
+        set(val) {
           this.setDataValue("password", val); // Remember to set the data value, otherwise it won't be validated
           this.setDataValue("salt", this.makeSalt());
           this.setDataValue("hashed_password", this.encryptPassword(val));
@@ -65,7 +70,7 @@ module.exports = (sequelize, DataTypes) =>
           return this.encryptPassword(plainText) === this.hashed_password;
         },
         makeSalt: function() {
-          Math.round(new Date().valueOf() * Math.random()) + "";
+          return Math.round(new Date().valueOf() * Math.random()) + "";
         },
         encryptPassword: function encryptPassword(password) {
           if (!password) return "";
@@ -75,7 +80,7 @@ module.exports = (sequelize, DataTypes) =>
               .update(password)
               .digest("hex");
           } catch (err) {
-            return "";
+            throw err;
           }
         }
       }
