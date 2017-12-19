@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const db = require("../../models");
+const errorWithCode = require("../helpers/error");
 
 const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 
@@ -33,7 +34,7 @@ const confirmUser = (req, res, next) => {
   User.findById(userId)
     .then(user => {
       if (!user) {
-        throw new Error("This user does not exist!");
+        throw errorWithCode("This user does not exist!", 404);
       }
       return user.updateAttributes({
         password,
@@ -58,13 +59,13 @@ const login = (req, res, next) => {
   })
     .then(user => {
       if (!user) {
-        throw new Error("User does not exist!");
+        throw errorWithCode("User does not exist!", 404);
       }
       return Promise.all([user.authenticate(password), user]);
     })
     .then(([success, user]) => {
       if (!success) {
-        throw new Error("Password is incorrect");
+        throw errorWithCode("Password is incorrect", 401);
       }
       return issueToken(user, user.userType, res);
     })

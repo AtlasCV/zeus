@@ -1,4 +1,5 @@
 const db = require("../../models");
+const errorWithCode = require("../helpers/error");
 
 const { Applicant, User } = db;
 
@@ -24,7 +25,8 @@ const getApplicantById = (req, res, next) => {
     attributes: { exclude: ["salt", "hashedPassword"] }
   })
     .then(applicant => {
-      if (!applicant) throw Error("Applicant with this id does not exist!");
+      if (!applicant)
+        throw errorWithCode("Applicant with this id does not exist!", 404);
       res.json({
         data: { applicant },
         successful: true,
@@ -37,7 +39,7 @@ const getApplicantById = (req, res, next) => {
 const createApplicant = (req, res, next) => {
   const { email, firstName, lastName, linkedIn } = req.body;
   const newApplicantProps = { linkedIn };
-  const newUserProps = { firstName, lastName, email, userType: "applicant" };
+  const newUserProps = { firstName, lastName, email, userType: "Applicant" };
 
   User.findOne({ where: { email } })
     .then(applicant => {
@@ -88,13 +90,13 @@ const updateApplicant = (req, res, next) => {
   Applicant.findById(applicantId)
     .then(applicant => {
       if (!applicant) {
-        throw Error("This applicant does not exist!");
+        throw errorWithCode("This applicant does not exist!", 404);
       }
       return Promise.all([applicant.getUser(), applicant]);
     })
     .then(([user, applicant]) => {
       if (!user) {
-        throw Error("This user does not exist!");
+        throw errorWithCode("This user does not exist!", 404);
       }
       const applicantProps = {
         linkedIn: linkedIn || applicant.linkedIn,
@@ -119,7 +121,10 @@ const updateApplicant = (req, res, next) => {
     .then(([applicant, user]) => applicant.getUser({ include: [Applicant] }))
     .then(user => {
       if (!user) {
-        throw Error("This applicant was not updated successfully!");
+        throw errorWithCode(
+          "This applicant was not updated successfully!",
+          500
+        );
       }
       res.json({
         status: 201,

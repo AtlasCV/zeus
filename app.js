@@ -25,7 +25,7 @@ function customSwaggerErrorHandler(err, req, res, next) {
   if (env === "test") console.error(err);
   if (err.failedValidation) {
     console.error(`Error code 400 sent to user. Message is "${err.message}"`);
-    res.status(400).json({
+    res.status().json({
       success: false,
       status: 400,
       message: err.message,
@@ -33,13 +33,13 @@ function customSwaggerErrorHandler(err, req, res, next) {
     });
   } else {
     console.error(
-      `Error code ${err.statusCode || 500} sent to user. Message is "${
+      `Error code ${err.status || 500} sent to user. Message is "${
         err.message
       }"`
     );
-    res.status(err.statusCode || 500).json({
+    res.status(err.status || 500).json({
       success: false,
-      status: err.statusCode || 500,
+      status: err.status || 500,
       message: err.message
     });
   }
@@ -67,7 +67,6 @@ if (env === "test") {
     if (err) {
       throw err;
     }
-
     /**
      * Listen on provided port, on all network interfaces...
      */
