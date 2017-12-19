@@ -197,6 +197,7 @@ module.exports = {
         },
         hashed_password: Sequelize.STRING,
         salt: Sequelize.STRING,
+        userType: Sequelize.STRING,
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE
       })

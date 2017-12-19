@@ -46,6 +46,9 @@ module.exports = (sequelize, DataTypes) =>
         required: true,
         devaultValue: false
       },
+      userType: {
+        type: DataTypes.STRING
+      },
       password: {
         type: DataTypes.VIRTUAL,
         set(val) {

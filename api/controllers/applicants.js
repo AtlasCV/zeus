@@ -37,7 +37,7 @@ const getApplicantById = (req, res, next) => {
 const createApplicant = (req, res, next) => {
   const { email, firstName, lastName, linkedIn } = req.body;
   const newApplicantProps = { linkedIn };
-  const newUserProps = { firstName, lastName, email };
+  const newUserProps = { firstName, lastName, email, userType: "applicant" };
 
   User.findOne({ where: { email } })
     .then(applicant => {
