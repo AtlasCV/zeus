@@ -152,6 +152,20 @@ module.exports = {
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE
       }),
+      queryInterface.createTable("IndustrySectors", {
+        id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
+      }),
       queryInterface.createTable("Users", {
         id: {
           type: Sequelize.INTEGER,
@@ -298,6 +312,35 @@ module.exports = {
           createdAt: Sequelize.DATE,
           updatedAt: Sequelize.DATE
         }),
+        queryInterface.createTable("ApplicantIndustrySectors", {
+          id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true
+          },
+          ApplicantId: {
+            type: Sequelize.INTEGER,
+            references: {
+              model: "Applicants",
+              key: "id"
+            },
+            onUpdate: "cascade",
+            onDelete: "cascade"
+          },
+          SkillId: {
+            type: Sequelize.INTEGER,
+            references: {
+              model: "IndustrySectors",
+              key: "id"
+            },
+            onUpdate: "cascade",
+            onDelete: "cascade"
+          },
+          yearsExperience: Sequelize.STRING,
+          createdAt: Sequelize.DATE,
+          updatedAt: Sequelize.DATE
+        }),
         queryInterface.addColumn("Applicants", "UserId", {
           type: Sequelize.INTEGER,
           references: {
@@ -344,6 +387,15 @@ module.exports = {
           onDelete: "cascade"
         }),
         queryInterface.addColumn("Jobs", "IndustryId", {
+          type: Sequelize.INTEGER,
+          references: {
+            model: "Industries",
+            key: "id"
+          },
+          onUpdate: "cascade",
+          onDelete: "cascade"
+        }),
+        queryInterface.addColumn("IndustrySectors", "IndustryId", {
           type: Sequelize.INTEGER,
           references: {
             model: "Industries",
