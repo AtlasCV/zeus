@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) =>
-  sequelize.define("ApplicantSkill", {
+  sequelize.define("ApplicantIndustrySector", {
     yearsExperience: {
       type: DataTypes.STRING,
       allowNull: false
