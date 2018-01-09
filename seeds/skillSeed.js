@@ -24,13 +24,12 @@ const seedData = [
   { name: "public_speaking" },
   { name: "analytical_writing" },
   { name: "cost_accounting" },
-  { name: "federal_tax_la" }
+  { name: "federal_tax_law" }
 ];
 
-const seedIndustries = () => {
-  Promise.each(seedData, skill => Skill.create(skill));
-};
+const seedSkills = () =>
+  Promise.each(seedData, skill => Skill.create(skill)).then(skills =>
+    console.log(`Successfully seeded ${skills.length} skills.`)
+  );
 
-seedIndustries().then(skills =>
-  console.log(`Successfully seeded ${skills.length} skills.`)
-);
+module.exports = { seedSkills };

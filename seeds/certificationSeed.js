@@ -39,12 +39,11 @@ const seedData = [
   { name: "Certified Fraud Examiner (CFE)", IndustryId: 2 }
 ];
 
-const seedCertifications = () => {
-  Promise.each(seedData, certification => Certification.create(certification));
-};
+const seedCertifications = () =>
+  Promise.each(seedData, certification =>
+    Certification.create(certification)
+  ).then(certifications =>
+    console.log(`Successfully seeded ${certifications.length} certifications.`)
+  );
 
-seedCertifications().then(certifications =>
-  console.log(
-    `Successfully seeded ${certifications.length} Certification Sectors.`
-  )
-);
+module.exports = { seedCertifications };

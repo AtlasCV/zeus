@@ -1,10 +1,10 @@
 {
+  "extends": "airbnb-base",
   "rules": {
       "import/newline-after-import": 0,
       "no-confusing-arrow": ["error", {"allowParens": true}],
       "comma-dangle": ["error", "never"]
   },
-  "extends": "airbnb-base",
   "plugins": [
       "import",
       "jasmine",

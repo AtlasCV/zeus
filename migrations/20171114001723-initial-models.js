@@ -328,7 +328,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
-          SkillId: {
+          IndustrySectorId: {
             type: Sequelize.INTEGER,
             references: {
               model: "IndustrySectors",
