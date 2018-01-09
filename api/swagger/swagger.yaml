@@ -199,6 +199,45 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /applicants/{applicantId}/industrySectors:
+    post:
+      x-swagger-router-controller: industrySectors
+      description: Adds an industry sector for an applicant
+      operationId: addIndustrySectorsToApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's industrySectors being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - industrySectors
+            properties:
+              industrySectors:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: number
+                    experience:
+                      type: string
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
   /applicants/{applicantId}/industries:
     post:
       x-swagger-router-controller: industries
@@ -340,6 +379,20 @@ paths:
       responses:
         "200":
           description: Successfully return all industries
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /industrySectors:
+    get:
+      x-swagger-router-controller: industrySectors
+      description: Gets all of the industrySectors in the database
+      operationId: getAllIndustrySectors
+      responses:
+        "200":
+          description: Successfully return all industrySectors
           schema:
             type: object
         "500":
