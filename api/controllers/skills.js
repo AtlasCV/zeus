@@ -3,6 +3,20 @@ const db = require("../../models");
 
 const { Skill, Applicant, ApplicantSkill } = db;
 
+const getAllSkills = (req, res, next) => {
+  Skills.findAll()
+    .then(skills => {
+      res.json({
+        successful: true,
+        data: {
+          skills
+        },
+        status: 200
+      });
+    })
+    .catch(next);
+};
+
 const addSkillsToApplicant = (req, res, next) => {
   const applicantId = req.swagger.params.applicantId.value;
   const { skills } = req.body;
@@ -30,5 +44,6 @@ const addSkillsToApplicant = (req, res, next) => {
 };
 
 module.exports = {
+  getAllSkills,
   addSkillsToApplicant
 };

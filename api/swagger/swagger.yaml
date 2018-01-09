@@ -332,6 +332,34 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /industries:
+    get:
+      x-swagger-router-controller: industries
+      description: Gets all of the industries in the database
+      operationId: getAllIndustries
+      responses:
+        "200":
+          description: Successfully return all industries
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /skills:
+    get:
+      x-swagger-router-controller: skills
+      description: Gets all of the skills in the database
+      operationId: getAllSkills
+      responses:
+        "200":
+          description: Successfully return all skills
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
 definitions:
   ErrorResponse:
     required:
