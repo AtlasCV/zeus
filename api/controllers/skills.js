@@ -4,7 +4,7 @@ const db = require("../../models");
 const { Skill, Applicant, ApplicantSkill } = db;
 
 const getAllSkills = (req, res, next) => {
-  Skills.findAll()
+  Skill.findAll()
     .then(skills => {
       res.json({
         successful: true,

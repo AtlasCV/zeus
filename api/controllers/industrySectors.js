@@ -4,7 +4,7 @@ const db = require("../../models");
 const { IndustrySector, Applicant, ApplicantIndustrySector } = db;
 
 const getAllIndustrySectors = (req, res, next) => {
-  IndustrySectors.findAll()
+  IndustrySector.findAll()
     .then(skills => {
       res.json({
         successful: true,

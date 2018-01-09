@@ -34,5 +34,6 @@ const addIndustriesToApplicant = (req, res, next) => {
 };
 
 module.exports = {
+  getAllIndustries,
   addIndustriesToApplicant
 };
