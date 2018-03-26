@@ -48,7 +48,8 @@ db.Sequelize = Sequelize;
   Skill,
   Certification,
   IndustrySector,
-  ApplicantIndustrySector
+  ApplicantIndustrySector,
+  PersonalityEvaluations
 }) => {
   Applicant.belongsTo(User);
   User.hasOne(Applicant);
@@ -88,6 +89,9 @@ db.Sequelize = Sequelize;
 
   IndustrySector.hasMany(ApplicantIndustrySector);
   Applicant.hasMany(ApplicantIndustrySector);
+
+  PersonalityEvaluations.belongsTo(Applicant);
+  Applicant.hasOne(PersonalityEvaluations);
 })(db);
 
 function sync(force) {

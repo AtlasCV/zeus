@@ -237,7 +237,6 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-
   /applicants/{applicantId}/industries:
     post:
       x-swagger-router-controller: industries
@@ -305,6 +304,76 @@ paths:
       responses:
         "201":
           description: Successfully create and associate education with applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /applicants/personality-evaluations:
+    post:
+      x-swagger-router-controller: personalityEvaluations
+      description: Creates an instance of a personality evaluations on the backend for the potential applicant to be associated with an applicant later.
+      operationId: createPersonalityEvaluation
+      responses:
+        "201":
+          description: Successfully create results
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /applicants/personality-evaluations/{uuid}:
+    get:
+      x-swagger-router-controller: personalityEvaluations
+      description: Gets an instance of a personality evaluation using the uuid
+      operationId: getPersonalityEvaluation
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: the
+          type: string
+      responses:
+        "200":
+          description: Successfully return the personality evaluation
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    put:
+      x-swagger-router-controller: personalityEvaluations
+      description: Gets an instance of a personality evaluation using the uuid
+      operationId: updatePersonalityEvaluation
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: the
+          type: string
+        - name: data
+          in: body
+          description: data to update a personality evaluation
+          required: true
+          schema:
+            type: object
+            properties:
+              answers:
+                type: array
+                items:
+                  type: number
+              currentQuestionIndex:
+                type: number
+              scoreSignature:
+                type: string
+              completed:
+                type: boolean
+      responses:
+        "200":
+          description: Successfully return the updated personality evaluation
           schema:
             type: object
         "500":
