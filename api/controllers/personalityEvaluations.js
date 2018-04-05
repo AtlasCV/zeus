@@ -15,9 +15,7 @@ const createPersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     successful: true,
-    data: {
-      personalityEvaluation
-    },
+    result: personalityEvaluation,
     status: 201
   });
 });
@@ -30,9 +28,7 @@ const getPersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     successful: true,
-    data: {
-      personalityEvaluation
-    },
+    result: personalityEvaluation,
     status: 200
   });
 });
@@ -58,9 +54,7 @@ const updatePersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     successful: true,
-    data: {
-      updatedEvaluation
-    },
+    result: personalityEvaluation,
     status: 200
   });
 });

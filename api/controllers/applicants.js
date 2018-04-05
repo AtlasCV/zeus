@@ -11,7 +11,7 @@ const getAllApplicants = (req, res, next) => {
     .then(applicants => {
       res.json({
         successful: true,
-        data: { applicants },
+        result: applicants,
         status: 200
       });
     })
@@ -28,8 +28,8 @@ const getApplicantById = (req, res, next) => {
       if (!applicant)
         throw errorWithCode("Applicant with this id does not exist!", 404);
       res.json({
-        data: { applicant },
         successful: true,
+        result: applicant,
         status: 200
       });
     })
@@ -61,9 +61,7 @@ const createApplicant = (req, res, next) => {
     .then(user => {
       res.json({
         successful: true,
-        data: {
-          user
-        },
+        result: user,
         status: 201
       });
     })
@@ -128,7 +126,7 @@ const updateApplicant = (req, res, next) => {
       }
       res.json({
         status: 201,
-        data: { user },
+        result: user,
         successful: true
       });
     })

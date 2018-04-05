@@ -10,20 +10,18 @@ const issueToken = (savedUser, userType, res) => {
   const { id, email, firstName, lastName } = savedUser.dataValues;
   return res.json({
     success: true,
-    data: {
-      jwt: jwt.sign(
-        {
-          id,
-          email: email.toLowerCase(),
-          firstName,
-          lastName,
-          userType,
-          iat: Math.floor(Date.now() / 1000) - 30
-        },
-        secret,
-        { expiresIn: 60 * 60 * 24 * 60 }
-      )
-    }
+    result: jwt.sign(
+      {
+        id,
+        email: email.toLowerCase(),
+        firstName,
+        lastName,
+        userType,
+        iat: Math.floor(Date.now() / 1000) - 30
+      },
+      secret,
+      { expiresIn: 60 * 60 * 24 * 60 }
+    )
   });
 };
 

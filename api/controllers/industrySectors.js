@@ -8,9 +8,7 @@ const getAllIndustrySectors = (req, res, next) => {
     .then(skills => {
       res.json({
         successful: true,
-        data: {
-          skills
-        },
+        result: skills,
         status: 200
       });
     })
@@ -34,9 +32,7 @@ const addIndustrySectorsToApplicant = (req, res, next) => {
     .then(skills => {
       res.json({
         successful: true,
-        data: {
-          skills
-        },
+        data: skills,
         status: 201
       });
     })

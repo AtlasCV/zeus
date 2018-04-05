@@ -18,9 +18,7 @@ const addEducationToApplicant = (req, res, next) => {
       .then(educationExperience => {
         res.json({
           successful: true,
-          data: {
-            educationExperience
-          },
+          data: educationExperience,
           status: 201
         });
       })

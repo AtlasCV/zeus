@@ -8,9 +8,7 @@ const getAllSkills = (req, res, next) => {
     .then(skills => {
       res.json({
         successful: true,
-        data: {
-          skills
-        },
+        result: skills,
         status: 200
       });
     })
@@ -34,9 +32,7 @@ const addSkillsToApplicant = (req, res, next) => {
     .then(skills => {
       res.json({
         successful: true,
-        data: {
-          skills
-        },
+        result: skills,
         status: 201
       });
     })
