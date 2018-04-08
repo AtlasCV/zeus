@@ -5,6 +5,7 @@ const app = require("express")();
 const db = require("./models");
 const volleyball = require("volleyball");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // const swaggerSecurityHandlers = require('./config/security');
 
@@ -14,12 +15,27 @@ const env = process.env.NODE_ENV;
 console.log("port", port);
 console.log("env", env);
 
-module.exports = app; // for testing
-
 app.use(volleyball);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+const allowedOrigins = ["http://localhost:3000"];
+
+const whitelist = allowedOrigins;
+
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (!origin) {
+      callback(null, true);
+    } else if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+};
+app.use(cors(corsOptions));
 
 function customSwaggerErrorHandler(err, req, res, next) {
   if (env === "test") console.error(err);
@@ -88,3 +104,5 @@ if (env === "test") {
     }
   });
 }
+
+module.exports = app; // for testing

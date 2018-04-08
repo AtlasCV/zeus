@@ -23,6 +23,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
+      ApplicantId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     });

@@ -310,11 +310,18 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /applicants/personality-evaluations:
+  /personality-evaluations:
     post:
       x-swagger-router-controller: personalityEvaluations
       description: Creates an instance of a personality evaluations on the backend for the potential applicant to be associated with an applicant later.
       operationId: createPersonalityEvaluation
+      parameters:
+        - name: data
+          in: body
+          description: empty object
+          required: true
+          schema:
+            type: object
       responses:
         "201":
           description: Successfully create results
@@ -324,7 +331,7 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /applicants/personality-evaluations/{uuid}:
+  /personality-evaluations/{uuid}:
     get:
       x-swagger-router-controller: personalityEvaluations
       description: Gets an instance of a personality evaluation using the uuid

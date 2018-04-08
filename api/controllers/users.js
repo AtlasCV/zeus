@@ -72,5 +72,6 @@ const login = (req, res, next) => {
 
 module.exports = {
   confirmUser,
-  login
+  login,
+  issueToken
 };

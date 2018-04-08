@@ -1,6 +1,6 @@
 const db = require("../../models");
 const errorWithCode = require("../helpers/error");
-
+const { issueToken } = require("./users");
 const { Applicant, User } = db;
 
 const getAllApplicants = (req, res, next) => {
@@ -37,9 +37,15 @@ const getApplicantById = (req, res, next) => {
 };
 
 const createApplicant = (req, res, next) => {
-  const { email, firstName, lastName, linkedIn } = req.body;
+  const { email, firstName, lastName, linkedIn, password } = req.body;
   const newApplicantProps = { linkedIn };
-  const newUserProps = { firstName, lastName, email, userType: "Applicant" };
+  const newUserProps = {
+    firstName,
+    lastName,
+    email,
+    userType: "Applicant",
+    password
+  };
 
   User.findOne({ where: { email } })
     .then(applicant => {
@@ -55,7 +61,7 @@ const createApplicant = (req, res, next) => {
     .then(applicant =>
       applicant.getUser({
         include: [Applicant],
-        attributes: { exclude: ["salt", "hashedPassword"] }
+        attributes: { exclude: ["password", "salt", "hashed_password"] }
       })
     )
     .then(user => {
@@ -124,11 +130,7 @@ const updateApplicant = (req, res, next) => {
           500
         );
       }
-      res.json({
-        status: 201,
-        result: user,
-        successful: true
-      });
+      issueToken(user, "Applicant", res);
     })
     .catch(next);
 };

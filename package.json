@@ -17,6 +17,7 @@
     "bunyan": "^1.8.5",
     "bunyan-slack": "0.0.10",
     "client-certificate-auth": "^0.3.0",
+    "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "express": "^4.12.3",
     "jwt-decode": "^2.2.0",
@@ -29,7 +30,7 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "swagger-express-mw": "^0.7.0",
-    "uuid": "^3.0.1",
+    "uuid": "^3.2.1",
     "volleyball": "^1.4.1"
   },
   "devDependencies": {
