@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const errorWithCode = require("../helpers/error");
+const asyncMiddleware = require("../helpers/asyncMiddleware");
 
 const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 
-const { User, Applicant } = db;
+const { User, Applicant, PersonalityEvaluations } = db;
 
 const issueToken = (savedUser, userType, res) => {
   const { id, email, firstName, lastName } = savedUser.dataValues;
@@ -70,8 +71,22 @@ const login = (req, res, next) => {
     .catch(next);
 };
 
+const getMe = asyncMiddleware(async (req, res, next) => {
+  const { authorization } = req.headers;
+  const { id } = jwt.decode(authorization);
+  const user = await User.findById(id, {
+    include: [{ model: Applicant, include: [PersonalityEvaluations] }]
+  });
+  res.json({
+    success: true,
+    result: user,
+    status: 200
+  });
+});
+
 module.exports = {
   confirmUser,
   login,
-  issueToken
+  issueToken,
+  getMe
 };

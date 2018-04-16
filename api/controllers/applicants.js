@@ -1,7 +1,11 @@
+const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const errorWithCode = require("../helpers/error");
 const { issueToken } = require("./users");
-const { Applicant, User } = db;
+const { Applicant, User, PersonalityEvaluations } = db;
+const asyncMiddleware = require("../helpers/asyncMiddleware");
+
+const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 
 const getAllApplicants = (req, res, next) => {
   Applicant.findAll({
@@ -36,8 +40,8 @@ const getApplicantById = (req, res, next) => {
     .catch(next);
 };
 
-const createApplicant = (req, res, next) => {
-  const { email, firstName, lastName, linkedIn, password } = req.body;
+const createApplicant = asyncMiddleware(async (req, res, next) => {
+  const { email, firstName, lastName, linkedIn, password, uuid } = req.body;
   const newApplicantProps = { linkedIn };
   const newUserProps = {
     firstName,
@@ -47,32 +51,47 @@ const createApplicant = (req, res, next) => {
     password
   };
 
-  User.findOne({ where: { email } })
-    .then(applicant => {
-      if (applicant) {
-        throw new Error("Applicant with this email already exists");
-      }
-      return Promise.all([
-        Applicant.create(newApplicantProps),
-        User.create(newUserProps)
-      ]);
-    })
-    .then(([applicant, user]) => applicant.setUser(user))
-    .then(applicant =>
-      applicant.getUser({
-        include: [Applicant],
-        attributes: { exclude: ["password", "salt", "hashed_password"] }
-      })
-    )
-    .then(user => {
-      res.json({
-        successful: true,
-        result: user,
-        status: 201
-      });
-    })
-    .catch(next);
-};
+  const existingUser = await User.findOne({ where: { email } });
+  if (existingUser) {
+    throw new Error("Applicant with this email already exists");
+  }
+
+  const [user, applicant, personalityEvaluation] = await Promise.all([
+    User.create(newUserProps),
+    Applicant.create(newApplicantProps),
+    PersonalityEvaluations.findOne({ where: { uuid } })
+  ]);
+
+  await Promise.all([
+    user.setApplicant(applicant),
+    personalityEvaluation.setApplicant(applicant)
+  ]);
+
+  const result = await User.findById(user.id, {
+    include: [{ model: Applicant, include: [PersonalityEvaluations] }],
+    attributes: { exclude: ["password", "salt", "hashed_password"] }
+  });
+
+  const token = jwt.sign(
+    {
+      id: user.id,
+      email: email.toLowerCase(),
+      firstName,
+      lastName,
+      userType: "Applicant",
+      iat: Math.floor(Date.now() / 1000) - 30
+    },
+    secret,
+    { expiresIn: 60 * 60 * 24 * 60 }
+  );
+
+  res.json({
+    successful: true,
+    result,
+    token,
+    status: 201
+  });
+});
 
 const updateApplicant = (req, res, next) => {
   const {
@@ -80,7 +99,6 @@ const updateApplicant = (req, res, next) => {
     lastName,
     email,
     city,
-    profilePhoto,
     transcript,
     aboutMe,
     gender,

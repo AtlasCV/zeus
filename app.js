@@ -51,7 +51,7 @@ function customSwaggerErrorHandler(err, req, res, next) {
     console.error(
       `Error code ${err.status || 500} sent to user. Message is "${
         err.message
-      }"`
+      }" \n Stack: ${err.stack}`
     );
     res.status(err.status || 500).json({
       success: false,
