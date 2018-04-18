@@ -105,7 +105,8 @@ const updateApplicant = (req, res, next) => {
     phone,
     birthday,
     profileImgUrl,
-    linkedIn
+    linkedIn,
+    jobType
   } = req.swagger.params.data.value;
   const applicantId = req.swagger.params.applicantId.value;
 
@@ -124,7 +125,8 @@ const updateApplicant = (req, res, next) => {
         linkedIn: linkedIn || applicant.linkedIn,
         aboutMe: aboutMe || applicant.aboutMe,
         transcript: transcript || applicant.transcript,
-        city: city || applicant.city
+        city: city || applicant.city,
+        jobType: jobType || applicant.jobType
       };
       const userProps = {
         firstName: firstName || user.firstName,

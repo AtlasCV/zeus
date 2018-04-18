@@ -21,5 +21,9 @@ module.exports = (sequelize, DataTypes) =>
     city: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    jobType: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });

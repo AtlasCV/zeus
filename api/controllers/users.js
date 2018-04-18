@@ -5,7 +5,7 @@ const asyncMiddleware = require("../helpers/asyncMiddleware");
 
 const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 
-const { User, Applicant, PersonalityEvaluations } = db;
+const { User, Applicant, PersonalityEvaluations, Industry } = db;
 
 const issueToken = (savedUser, userType, res) => {
   const { id, email, firstName, lastName } = savedUser.dataValues;
@@ -75,7 +75,7 @@ const getMe = asyncMiddleware(async (req, res, next) => {
   const { authorization } = req.headers;
   const { id } = jwt.decode(authorization);
   const user = await User.findById(id, {
-    include: [{ model: Applicant, include: [PersonalityEvaluations] }]
+    include: [{ model: Applicant, include: [PersonalityEvaluations, Industry] }]
   });
   res.json({
     success: true,
