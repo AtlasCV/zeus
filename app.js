@@ -43,7 +43,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
   methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"]
 };
-app.options("/products/:id", cors()); // enable pre-flight request for DELETE request
+app.options("*", cors(corsOptions)); // enable pre-flight request for DELETE request
 app.use(cors(corsOptions));
 
 function customSwaggerErrorHandler(err, req, res, next) {
