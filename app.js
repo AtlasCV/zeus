@@ -40,8 +40,10 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"]
 };
+app.options("/products/:id", cors()); // enable pre-flight request for DELETE request
 app.use(cors(corsOptions));
 
 function customSwaggerErrorHandler(err, req, res, next) {
