@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 const allowedOrigins = [
   "http://localhost:3000",
   "http://new-atlas-frontend.s3-website-us-east-1.amazonaws.com/",
-  "http://http://d3c2guw9xs641w.cloudfront.net/",
+  "http://d3c2guw9xs641w.cloudfront.net/",
   "http://www.atlascv.com/",
   "http://atlascv.com"
 ];
@@ -43,7 +43,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
   methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"]
 };
-app.options("*", cors(corsOptions)); // enable pre-flight request for DELETE request
+
 app.use(cors(corsOptions));
 
 function customSwaggerErrorHandler(err, req, res, next) {
