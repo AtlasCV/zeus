@@ -20,7 +20,13 @@ app.use(volleyball);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://new-atlas-frontend.s3-website-us-east-1.amazonaws.com/",
+  "http://http://d3c2guw9xs641w.cloudfront.net/",
+  "www.atlascv.com/",
+  "atlascv.com"
+];
 
 const whitelist = allowedOrigins;
 
