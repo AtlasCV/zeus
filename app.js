@@ -24,8 +24,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://new-atlas-frontend.s3-website-us-east-1.amazonaws.com/",
   "http://http://d3c2guw9xs641w.cloudfront.net/",
-  "www.atlascv.com/",
-  "atlascv.com"
+  "http://www.atlascv.com/",
+  "http://atlascv.com"
 ];
 
 const whitelist = allowedOrigins;
@@ -39,7 +39,8 @@ const corsOptions = {
     } else {
       callback(new Error("Not allowed by CORS"));
     }
-  }
+  },
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 app.use(cors(corsOptions));
 
