@@ -22,9 +22,9 @@ app.use(bodyParser.json());
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "http://new-atlas-frontend.s3-website-us-east-1.amazonaws.com/",
-  "http://d3c2guw9xs641w.cloudfront.net/",
-  "http://www.atlascv.com/",
+  "http://new-atlas-frontend.s3-website-us-east-1.amazonaws.com",
+  "http://d3c2guw9xs641w.cloudfront.net",
+  "http://www.atlascv.com",
   "http://atlascv.com"
 ];
 
@@ -32,6 +32,7 @@ const whitelist = allowedOrigins;
 
 const corsOptions = {
   origin: function(origin, callback) {
+    console.log(origin);
     if (!origin) {
       callback(null, true);
     } else if (whitelist.indexOf(origin) !== -1) {
