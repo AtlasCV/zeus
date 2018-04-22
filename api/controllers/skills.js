@@ -21,7 +21,6 @@ const addSkillsToApplicant = (req, res, next) => {
   Applicant.findById(applicantId)
     .then(applicant => {
       return Promise.map(skills, skill => {
-        console.log(ApplicantSkill);
         return ApplicantSkill.create({
           ApplicantId: applicant.id,
           SkillId: skill.id,

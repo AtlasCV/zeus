@@ -8,7 +8,8 @@
     "start": "node app.js",
     "start:dev":
       "NODE_ENV=development sequelize db:migrate && NODE_ENV=development nodemon app.js",
-    "deploy": "eb deploy zeus-dev"
+    "deploy": "eb deploy zeus-dev",
+    "seed": "node seeds"
   },
   "author": "",
   "license": "ISC",

@@ -313,6 +313,48 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /applicants/{applicantId}/jobExperience:
+    post:
+      x-swagger-router-controller: jobExperience
+      description: Adds job experience
+      operationId: addJobExperienceToApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create job experience for an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - numOfYears
+              - currentlyWorkingHere
+              - companyName
+            properties:
+              name:
+                type: string
+              numOfYears:
+                type: number
+              currentlyWorkingHere:
+                type: boolean
+              companyName:
+                type: string
+              description:
+                type: string
+      responses:
+        "201":
+          description: Successfully create and associate job experience with applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /personality-evaluations:
     post:
       x-swagger-router-controller: personalityEvaluations

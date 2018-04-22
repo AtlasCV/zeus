@@ -21,5 +21,9 @@ module.exports = (sequelize, DataTypes) =>
     university: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    graduationYear: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });

@@ -21,7 +21,6 @@ const addIndustrySectorsToApplicant = (req, res, next) => {
   Applicant.findById(applicantId)
     .then(applicant => {
       return Promise.map(skills, skill => {
-        console.log(ApplicantIndustrySector);
         return ApplicantIndustrySector.create({
           ApplicantId: applicant.id,
           IndustrySectorId: skill.id,

@@ -1,0 +1,34 @@
+const Promise = require("bluebird");
+const db = require("../../models");
+const asyncMiddleware = require("../helpers/asyncMiddleware");
+
+const { Applicant, JobExperience } = db;
+
+const addJobExperienceToApplicant = asyncMiddleware(async (req, res, next) => {
+  const applicantId = req.swagger.params.applicantId.value;
+  const {
+    name,
+    numOfYears,
+    currentlyWorkingHere,
+    description,
+    companyName
+  } = req.body;
+
+  const jobExperience = await JobExperience.create({
+    name,
+    numOfYears,
+    currentlyWorkingHere,
+    description,
+    companyName: applicantId
+  });
+
+  res.json({
+    successful: true,
+    data: jobExperience,
+    status: 201
+  });
+});
+
+module.exports = {
+  addJobExperienceToApplicant
+};
