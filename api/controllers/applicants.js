@@ -41,8 +41,16 @@ const getApplicantById = (req, res, next) => {
 };
 
 const createApplicant = asyncMiddleware(async (req, res, next) => {
-  const { email, firstName, lastName, linkedIn, password, uuid } = req.body;
-  const newApplicantProps = { linkedIn };
+  const {
+    email,
+    firstName,
+    lastName,
+    linkedIn,
+    password,
+    uuid,
+    currentPageOfSignup
+  } = req.body;
+  const newApplicantProps = { linkedIn, currentPageOfSignup };
   const newUserProps = {
     firstName,
     lastName,
@@ -106,7 +114,9 @@ const updateApplicant = (req, res, next) => {
     birthday,
     profileImgUrl,
     linkedIn,
-    jobType
+    jobType,
+    currentPageOfSignup,
+    signupComplete
   } = req.swagger.params.data.value;
   const applicantId = req.swagger.params.applicantId.value;
 
@@ -121,12 +131,17 @@ const updateApplicant = (req, res, next) => {
       if (!user) {
         throw errorWithCode("This user does not exist!", 404);
       }
+
+      console.log(applicant.id, applicantId, currentPageOfSignup);
       const applicantProps = {
         linkedIn: linkedIn || applicant.linkedIn,
         aboutMe: aboutMe || applicant.aboutMe,
         transcript: transcript || applicant.transcript,
         city: city || applicant.city,
-        jobType: jobType || applicant.jobType
+        jobType: jobType || applicant.jobType,
+        currentPageOfSignup:
+          currentPageOfSignup || applicant.currentPageOfSignup,
+        sigupComplete: signupComplete || applicant.signupComplete
       };
       const userProps = {
         firstName: firstName || user.firstName,

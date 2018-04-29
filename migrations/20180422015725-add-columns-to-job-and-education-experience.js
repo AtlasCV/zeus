@@ -14,6 +14,14 @@ module.exports = {
       queryInterface.addColumn("Skills", "displayName", {
         type: Sequelize.STRING,
         allowNull: true
+      }),
+      queryInterface.addColumn("Applicants", "currentPageOfSignup", {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      }),
+      queryInterface.addColumn("Applicants", "signupComplete", {
+        type: Sequelize.BOOLEAN,
+        allowNull: true
       })
     ]);
   },
@@ -22,7 +30,9 @@ module.exports = {
     return Promise.all([
       queryInterface.removeColumn("EducationExperiences", "graduationYear"),
       queryInterface.removeColumn("JobExperiences", "companyName"),
-      queryInterface.removeColumn("Skills", "displayName")
+      queryInterface.removeColumn("Skills", "displayName"),
+      queryInterface.removeColumn("Applicants", "currentPageOfSignup"),
+      queryInterface.removeColumn("Applicants", "signupComplete")
     ]);
   }
 };

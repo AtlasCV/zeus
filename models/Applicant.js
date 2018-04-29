@@ -25,5 +25,13 @@ module.exports = (sequelize, DataTypes) =>
     jobType: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    signupComplete: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    currentPageOfSignup: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
     }
   });
