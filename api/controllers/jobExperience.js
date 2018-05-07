@@ -5,7 +5,7 @@ const asyncMiddleware = require("../helpers/asyncMiddleware");
 const { Applicant, JobExperience } = db;
 
 const addJobExperienceToApplicant = asyncMiddleware(async (req, res, next) => {
-  const applicantId = req.swagger.params.applicantId.value;
+  const ApplicantId = req.swagger.params.applicantId.value;
   const {
     name,
     numOfYears,
@@ -19,7 +19,8 @@ const addJobExperienceToApplicant = asyncMiddleware(async (req, res, next) => {
     numOfYears,
     currentlyWorkingHere,
     description,
-    companyName: applicantId
+    companyName,
+    ApplicantId
   });
 
   res.json({

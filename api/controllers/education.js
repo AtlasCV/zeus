@@ -1,17 +1,24 @@
 const db = require("../../models");
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
-const { Applicant, JobExperience } = db;
+const { Applicant, EducationExperience } = db;
 
 const addEducationToApplicant = asyncMiddleware(async (req, res, next) => {
   const applicantId = req.swagger.params.applicantId.value;
-  const { areaOfStudy, gpa, educationLevel, university } = req.body;
-
-  const educationExperience = await JobExperience.create({
+  const {
     areaOfStudy,
     gpa,
     educationLevel,
     university,
+    graduationYear
+  } = req.body;
+
+  const educationExperience = await EducationExperience.create({
+    areaOfStudy,
+    gpa,
+    educationLevel,
+    university,
+    graduationYear,
     ApplicantId: applicantId
   });
 

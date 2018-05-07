@@ -1,5 +1,6 @@
 const Promise = require("bluebird");
 const db = require("../../models");
+const asyncMiddleware = require("../helpers/asyncMiddleware");
 
 const { Skill, Applicant, ApplicantSkill } = db;
 
@@ -15,28 +16,39 @@ const getAllSkills = (req, res, next) => {
     .catch(next);
 };
 
-const addSkillsToApplicant = (req, res, next) => {
+const addSkillsToApplicant = asyncMiddleware(async (req, res, next) => {
   const applicantId = req.swagger.params.applicantId.value;
-  const { skills } = req.body;
-  Applicant.findById(applicantId)
-    .then(applicant => {
-      return Promise.map(skills, skill => {
-        return ApplicantSkill.create({
-          ApplicantId: applicant.id,
-          SkillId: skill.id,
-          yearsExperience: skill.yearsExperience
-        });
-      });
-    })
-    .then(skills => {
-      res.json({
-        successful: true,
-        result: skills,
-        status: 201
-      });
-    })
-    .catch(next);
-};
+  const { skill } = req.body;
+
+  const associatedSkill = await ApplicantSkill.create({
+    ApplicantId: applicantId,
+    SkillId: skill.id,
+    yearsExperience: skill.yearsExperience
+  });
+  res.json({
+    successful: true,
+    result: associatedSkill,
+    status: 201
+  });
+});
+
+const removeSkillFromApplicant = asyncMiddleware(async (req, res, next) => {
+  const applicantId = req.swagger.params.applicantId.value;
+  const { skillId } = req.body;
+
+  await ApplicantSkill.destroy({
+    where: {
+      ApplicantId: applicantId,
+      SkillId: skillId
+    }
+  });
+
+  res.json({
+    successful: true,
+    result: {},
+    status: 204
+  });
+});
 
 module.exports = {
   getAllSkills,

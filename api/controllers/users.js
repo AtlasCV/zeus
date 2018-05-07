@@ -5,13 +5,23 @@ const asyncMiddleware = require("../helpers/asyncMiddleware");
 
 const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 
-const { User, Applicant, PersonalityEvaluations, Industry } = db;
+const {
+  User,
+  Applicant,
+  PersonalityEvaluations,
+  Industry,
+  EducationExperience,
+  JobExperience,
+  Skill,
+  ApplicantSkill
+} = db;
 
 const issueToken = (savedUser, userType, res) => {
   const { id, email, firstName, lastName } = savedUser.dataValues;
   return res.json({
     success: true,
-    result: jwt.sign(
+    result: savedUser,
+    token: jwt.sign(
       {
         id,
         email: email.toLowerCase(),
@@ -75,7 +85,18 @@ const getMe = asyncMiddleware(async (req, res, next) => {
   const { authorization } = req.headers;
   const { id } = jwt.decode(authorization);
   const user = await User.findById(id, {
-    include: [{ model: Applicant, include: [PersonalityEvaluations, Industry] }]
+    include: [
+      {
+        model: Applicant,
+        include: [
+          PersonalityEvaluations,
+          Industry,
+          EducationExperience,
+          JobExperience,
+          { model: ApplicantSkill, include: [Skill] }
+        ]
+      }
+    ]
   });
   res.json({
     success: true,

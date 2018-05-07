@@ -182,17 +182,45 @@ paths:
           schema:
             type: object
             required:
-              - skills
+              - skill
             properties:
-              skills:
-                type: array
-                items:
-                  type: object
-                  properties: 
-                    id:
-                      type: number
-                    experience:
-                      type: string
+              skill:
+                type: object
+                properties: 
+                  id:
+                    type: number
+                  yearsExperience:
+                    type: string
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      x-swagger-router-controller: skills
+      description: removes a skill from an applicant
+      operationId: removeSkillFromApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being removed
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: skillId to remove
+          required: true
+          schema:
+            type: object
+            required:
+              - skillId
+            properties:
+              skillId:
+                type: number
       responses:
         "201":
           description: Successfully create a new applicant

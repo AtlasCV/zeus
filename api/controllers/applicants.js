@@ -2,7 +2,14 @@ const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const errorWithCode = require("../helpers/error");
 const { issueToken } = require("./users");
-const { Applicant, User, PersonalityEvaluations } = db;
+const {
+  Applicant,
+  User,
+  PersonalityEvaluations,
+  JobExperience,
+  EducationExperience,
+  Industry
+} = db;
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
 const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
@@ -132,7 +139,6 @@ const updateApplicant = (req, res, next) => {
         throw errorWithCode("This user does not exist!", 404);
       }
 
-      console.log(applicant.id, applicantId, currentPageOfSignup);
       const applicantProps = {
         linkedIn: linkedIn || applicant.linkedIn,
         aboutMe: aboutMe || applicant.aboutMe,
@@ -157,7 +163,21 @@ const updateApplicant = (req, res, next) => {
         user.updateAttributes(userProps)
       ]);
     })
-    .then(([applicant, user]) => applicant.getUser({ include: [Applicant] }))
+    .then(([applicant, user]) =>
+      applicant.getUser({
+        include: [
+          {
+            model: Applicant,
+            include: [
+              PersonalityEvaluations,
+              Industry,
+              EducationExperience,
+              JobExperience
+            ]
+          }
+        ]
+      })
+    )
     .then(user => {
       if (!user) {
         throw errorWithCode(
