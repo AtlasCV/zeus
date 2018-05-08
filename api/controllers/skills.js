@@ -52,5 +52,6 @@ const removeSkillFromApplicant = asyncMiddleware(async (req, res, next) => {
 
 module.exports = {
   getAllSkills,
-  addSkillsToApplicant
+  addSkillsToApplicant,
+  removeSkillFromApplicant
 };
