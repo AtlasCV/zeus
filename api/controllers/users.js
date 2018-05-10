@@ -13,26 +13,30 @@ const {
   EducationExperience,
   JobExperience,
   Skill,
-  ApplicantSkill
+  ApplicantSkill,
+  IndustrySector,
+  ApplicantIndustrySector
 } = db;
 
-const issueToken = (savedUser, userType, res) => {
-  const { id, email, firstName, lastName } = savedUser.dataValues;
+const issueToken = (user, userType, res) => {
+  const { id, email, firstName, lastName } = user.dataValues;
   return res.json({
     success: true,
-    result: savedUser,
-    token: jwt.sign(
-      {
-        id,
-        email: email.toLowerCase(),
-        firstName,
-        lastName,
-        userType,
-        iat: Math.floor(Date.now() / 1000) - 30
-      },
-      secret,
-      { expiresIn: 60 * 60 * 24 * 60 }
-    )
+    result: {
+      user,
+      token: jwt.sign(
+        {
+          id,
+          email: email.toLowerCase(),
+          firstName,
+          lastName,
+          userType,
+          iat: Math.floor(Date.now() / 1000) - 30
+        },
+        secret,
+        { expiresIn: 60 * 60 * 24 * 60 }
+      )
+    }
   });
 };
 
@@ -93,8 +97,10 @@ const getMe = asyncMiddleware(async (req, res, next) => {
           Industry,
           EducationExperience,
           JobExperience,
-          { model: ApplicantSkill, include: [Skill] }
-        ]
+          { model: ApplicantSkill, include: [Skill] },
+          { model: ApplicantIndustrySector, include: [IndustrySector] }
+        ],
+        attributes: { exclude: ["password", "salt", "hashed_password"] }
       }
     ]
   });

@@ -25,7 +25,7 @@ const addJobExperienceToApplicant = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     successful: true,
-    data: jobExperience,
+    result: jobExperience,
     status: 201
   });
 });

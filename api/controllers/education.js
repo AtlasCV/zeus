@@ -24,7 +24,7 @@ const addEducationToApplicant = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     successful: true,
-    data: educationExperience,
+    result: educationExperience,
     status: 201
   });
 });

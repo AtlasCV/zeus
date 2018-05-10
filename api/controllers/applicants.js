@@ -8,7 +8,11 @@ const {
   PersonalityEvaluations,
   JobExperience,
   EducationExperience,
-  Industry
+  Industry,
+  ApplicantSkill,
+  ApplicantIndustrySector,
+  Skill,
+  IndustrySector
 } = db;
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
@@ -83,8 +87,13 @@ const createApplicant = asyncMiddleware(async (req, res, next) => {
   ]);
 
   const result = await User.findById(user.id, {
-    include: [{ model: Applicant, include: [PersonalityEvaluations] }],
-    attributes: { exclude: ["password", "salt", "hashed_password"] }
+    include: [
+      {
+        model: Applicant,
+        include: [PersonalityEvaluations],
+        attributes: { exclude: ["password", "salt", "hashed_password"] }
+      }
+    ]
   });
 
   const token = jwt.sign(
@@ -172,8 +181,11 @@ const updateApplicant = (req, res, next) => {
               PersonalityEvaluations,
               Industry,
               EducationExperience,
-              JobExperience
-            ]
+              JobExperience,
+              { model: ApplicantSkill, include: [Skill] },
+              { model: ApplicantIndustrySector, include: [IndustrySector] }
+            ],
+            attributes: { exclude: ["password", "salt", "hashed_password"] }
           }
         ]
       })

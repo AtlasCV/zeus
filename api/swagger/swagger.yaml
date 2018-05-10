@@ -248,17 +248,45 @@ paths:
           schema:
             type: object
             required:
-              - industrySectors
+              - industrySector
             properties:
-              industrySectors:
-                type: array
-                items:
-                  type: object
-                  properties: 
-                    id:
-                      type: number
-                    experience:
-                      type: string
+              industrySector:
+                type: object
+                properties: 
+                  id:
+                    type: number
+                  yearsExperience:
+                    type: string
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      x-swagger-router-controller: industrySectors
+      description: removes a industrySector from an applicant
+      operationId: removeIndustrySectorFromApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's industrySectors being removed
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: industrySectorId to remove
+          required: true
+          schema:
+            type: object
+            required:
+              - industrySectorId
+            properties:
+              industrySectorId:
+                type: number
       responses:
         "201":
           description: Successfully create a new applicant
@@ -539,6 +567,26 @@ paths:
       x-swagger-router-controller: industrySectors
       description: Gets all of the industrySectors in the database
       operationId: getAllIndustrySectors
+      responses:
+        "200":
+          description: Successfully return all industrySectors
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /industrySectors/{industryId}:
+    get:
+      x-swagger-router-controller: industrySectors
+      description: Gets all of the industrySectors in the database
+      operationId: getIndustrySectorsByIndustry
+      parameters:
+        - name: industryId
+          in: path
+          required: true
+          description: the
+          type: string
       responses:
         "200":
           description: Successfully return all industrySectors
