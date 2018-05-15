@@ -86,7 +86,7 @@ const createApplicant = asyncMiddleware(async (req, res, next) => {
     personalityEvaluation.setApplicant(applicant)
   ]);
 
-  const result = await User.findById(user.id, {
+  const foundUser = await User.findById(user.id, {
     include: [
       {
         model: Applicant,
@@ -111,8 +111,10 @@ const createApplicant = asyncMiddleware(async (req, res, next) => {
 
   res.json({
     successful: true,
-    result,
-    token,
+    result: {
+      user: foundUser,
+      token
+    },
     status: 201
   });
 });
