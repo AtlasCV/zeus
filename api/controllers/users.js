@@ -64,26 +64,39 @@ const confirmUser = (req, res, next) => {
     .catch(next);
 };
 
-const login = (req, res, next) => {
+const login = asyncMiddleware(async (req, res, next) => {
   const { email, password } = req.body;
-  User.findOne({
-    where: { email },
-    include: [Applicant]
-  })
-    .then(user => {
-      if (!user) {
-        throw errorWithCode("User does not exist!", 404);
+
+  const user = await User.find({ where: { email } });
+
+  const success = await user.authenticate(password);
+
+  if (!user) {
+    throw errorWithCode("User does not exist!", 404);
+  }
+  if (!success) {
+    throw errorWithCode("Password is incorrect", 401);
+  }
+
+  const userWithAdditionalModels = await User.findById(user.id, {
+    include: [
+      {
+        model: Applicant,
+        include: [
+          PersonalityEvaluations,
+          Industry,
+          EducationExperience,
+          JobExperience,
+          { model: ApplicantSkill, include: [Skill] },
+          { model: ApplicantIndustrySector, include: [IndustrySector] }
+        ],
+        attributes: { exclude: ["password", "salt", "hashed_password"] }
       }
-      return Promise.all([user.authenticate(password), user]);
-    })
-    .then(([success, user]) => {
-      if (!success) {
-        throw errorWithCode("Password is incorrect", 401);
-      }
-      return issueToken(user, user.userType, res);
-    })
-    .catch(next);
-};
+    ]
+  });
+
+  return issueToken(userWithAdditionalModels, user.userType, res);
+});
 
 const getMe = asyncMiddleware(async (req, res, next) => {
   const { authorization } = req.headers;
