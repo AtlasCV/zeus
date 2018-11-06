@@ -30,7 +30,7 @@ module.exports = {
     username: "root",
     password: "superroot",
     database: "ebdb",
-    host: "aajegyav18eago.cedtvuslgbbr.us-east-1.rds.amazonaws.com",
+    host: "showcase-dev.cedtvuslgbbr.us-east-1.rds.amazonaws.com",
     port: "5432",
     logging: false,
     dialect: "postgres"
