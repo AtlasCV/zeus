@@ -138,6 +138,8 @@ const updateApplicant = (req, res, next) => {
   } = req.swagger.params.data.value;
   const applicantId = req.swagger.params.applicantId.value;
 
+  console.log(signupComplete);
+
   Applicant.findById(applicantId)
     .then(applicant => {
       if (!applicant) {
@@ -158,7 +160,7 @@ const updateApplicant = (req, res, next) => {
         jobType: jobType || applicant.jobType,
         currentPageOfSignup:
           currentPageOfSignup || applicant.currentPageOfSignup,
-        sigupComplete: signupComplete || applicant.signupComplete
+        signupComplete: signupComplete || applicant.signupComplete
       };
       const userProps = {
         firstName: firstName || user.firstName,
