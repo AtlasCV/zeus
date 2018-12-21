@@ -29,7 +29,7 @@ module.exports = {
   staging: {
     username: "root",
     password: "superroot",
-    database: "ebdb",
+    database: "showcase-dev",
     host: "showcase-dev.cedtvuslgbbr.us-east-1.rds.amazonaws.com",
     port: "5432",
     logging: false,
