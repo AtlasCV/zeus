@@ -2,7 +2,7 @@ const Promise = require("bluebird");
 const db = require("../../models");
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
-const { IndustrySector, Applicant, ApplicantIndustrySector } = db;
+const { IndustrySector, ApplicantIndustrySector } = db;
 
 const getAllIndustrySectors = (req, res, next) => {
   IndustrySector.findAll()

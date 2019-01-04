@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable("PersonalityEvaluations", {
+    return queryInterface.createTable("PersonalityEvaluation", {
       uuid: {
         type: Sequelize.STRING,
         primaryKey: true
@@ -33,6 +33,6 @@ module.exports = {
   },
 
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable("PersonalityEvaluations");
+    return queryInterface.dropTable("PersonalityEvaluation");
   }
 };

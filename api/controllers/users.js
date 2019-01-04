@@ -8,14 +8,16 @@ const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 const {
   User,
   Applicant,
-  PersonalityEvaluations,
+  PersonalityEvaluation,
   Industry,
   EducationExperience,
   JobExperience,
   Skill,
   ApplicantSkill,
   IndustrySector,
-  ApplicantIndustrySector
+  ApplicantIndustrySector,
+  Certification,
+  ApplicantCertification
 } = db;
 
 const issueToken = (user, userType, res) => {
@@ -83,7 +85,7 @@ const login = asyncMiddleware(async (req, res, next) => {
       {
         model: Applicant,
         include: [
-          PersonalityEvaluations,
+          PersonalityEvaluation,
           Industry,
           EducationExperience,
           JobExperience,
@@ -106,12 +108,13 @@ const getMe = asyncMiddleware(async (req, res, next) => {
       {
         model: Applicant,
         include: [
-          PersonalityEvaluations,
+          PersonalityEvaluation,
           Industry,
           EducationExperience,
           JobExperience,
           { model: ApplicantSkill, include: [Skill] },
-          { model: ApplicantIndustrySector, include: [IndustrySector] }
+          { model: ApplicantIndustrySector, include: [IndustrySector] },
+          { model: ApplicantCertification, include: [Certification] }
         ],
         attributes: { exclude: ["password", "salt", "hashed_password"] }
       }

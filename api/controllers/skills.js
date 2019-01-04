@@ -2,7 +2,7 @@ const Promise = require("bluebird");
 const db = require("../../models");
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
-const { Skill, Applicant, ApplicantSkill } = db;
+const { Skill, ApplicantSkill } = db;
 
 const getAllSkills = (req, res, next) => {
   Skill.findAll()

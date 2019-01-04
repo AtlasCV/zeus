@@ -2,13 +2,13 @@
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.addColumn("Applicants", "jobType", {
+    return queryInterface.addColumn("Applicant", "jobType", {
       type: Sequelize.STRING,
       allowNull: true
     });
   },
 
   down: function(queryInterface, Sequelize) {
-    return queryInterface.removeColumn("Applicants", "jobType");
+    return queryInterface.removeColumn("Applicant", "jobType");
   }
 };

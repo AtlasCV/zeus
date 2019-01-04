@@ -17,6 +17,7 @@ const seedData = [
   { name: "Chartered Life Underwriter (CLU)", IndustryId: 1 },
   { name: "Series 7 Certified", IndustryId: 1 },
   { name: "Series 66 Certified", IndustryId: 1 },
+  { name: "Series 62", IndustryId: 1 },
   {
     name: "Series 63 – Uniform Securities Agent State Law Exam",
     IndustryId: 1

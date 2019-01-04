@@ -15,8 +15,7 @@ const sequelize = new Sequelize(
   config
 );
 
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter(function(file) {
     return (
       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
@@ -49,7 +48,7 @@ db.Sequelize = Sequelize;
   Certification,
   IndustrySector,
   ApplicantIndustrySector,
-  PersonalityEvaluations
+  PersonalityEvaluation
 }) => {
   Applicant.belongsTo(User);
   User.hasOne(Applicant);
@@ -90,8 +89,8 @@ db.Sequelize = Sequelize;
   IndustrySector.hasMany(ApplicantIndustrySector);
   Applicant.hasMany(ApplicantIndustrySector);
 
-  PersonalityEvaluations.belongsTo(Applicant);
-  Applicant.hasOne(PersonalityEvaluations);
+  PersonalityEvaluation.belongsTo(Applicant);
+  Applicant.hasOne(PersonalityEvaluation);
 })(db);
 
 function sync(force) {

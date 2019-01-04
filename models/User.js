@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) =>
       },
       lastName: {
         type: DataTypes.STRING,
-        allowNull: false  
+        allowNull: false
       },
       email: {
         type: DataTypes.STRING,
@@ -68,6 +68,7 @@ module.exports = (sequelize, DataTypes) =>
       salt: DataTypes.STRING
     },
     {
+      freezeTableName: true,
       instanceMethods: {
         authenticate: function authenticate(plainText) {
           return this.encryptPassword(plainText) === this.hashed_password;

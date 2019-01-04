@@ -60,7 +60,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
     post:
       x-swagger-router-controller: applicants
       description: Creates a new applicant
@@ -96,7 +96,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}:
     x-swagger-router-controller: applicants
     get:
@@ -116,45 +116,45 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
     put:
       description: update an existing applicant
       operationId: updateApplicant
       parameters:
-      - name: applicantId
-        in: path
-        description: id of the applicant being updated
-        required: true
-        type: string
-      - name: data
-        in: body
-        description: data required to create an applicant
-        required: true
-        schema:
-          type: object
-          properties:
-            firstName:
-              type: string
-            lastName:
-              type: string
-            email:
-              type: string
-            city:
-              type: string
-            profileImgUrl:
-              type: string
-            transcript:
-              type: string
-            aboutMe:
-              type: string
-            gender:
-              type: string
-            phone:
-              type: string
-            birthday:
-              type: string
-            password:
-              type: string
+        - name: applicantId
+          in: path
+          description: id of the applicant being updated
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create an applicant
+          required: true
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+              city:
+                type: string
+              profileImgUrl:
+                type: string
+              transcript:
+                type: string
+              aboutMe:
+                type: string
+              gender:
+                type: string
+              phone:
+                type: string
+              birthday:
+                type: string
+              password:
+                type: string
       responses:
         "200":
           description: Successfully update an existing applicant
@@ -163,7 +163,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}/skills:
     post:
       x-swagger-router-controller: skills
@@ -186,7 +186,7 @@ paths:
             properties:
               skill:
                 type: object
-                properties: 
+                properties:
                   id:
                     type: number
                   yearsExperience:
@@ -199,7 +199,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
     delete:
       x-swagger-router-controller: skills
       description: removes a skill from an applicant
@@ -229,7 +229,73 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
+  /applicants/{applicantId}/certifications:
+    post:
+      x-swagger-router-controller: certifications
+      description: Adds a certification for an applicant
+      operationId: addSkillsToApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's certifications being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - certification
+            properties:
+              certification:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  yearsExperience:
+                    type: string
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      x-swagger-router-controller: certifications
+      description: removes a certification from an applicant
+      operationId: removeSkillFromApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's certifications being removed
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: certificationId to remove
+          required: true
+          schema:
+            type: object
+            required:
+              - certificationId
+            properties:
+              certificationId:
+                type: number
+      responses:
+        "201":
+          description: Successfully create a new applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}/industrySectors:
     post:
       x-swagger-router-controller: industrySectors
@@ -252,7 +318,7 @@ paths:
             properties:
               industrySector:
                 type: object
-                properties: 
+                properties:
                   id:
                     type: number
                   yearsExperience:
@@ -265,7 +331,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
     delete:
       x-swagger-router-controller: industrySectors
       description: removes a industrySector from an applicant
@@ -295,7 +361,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}/industries:
     post:
       x-swagger-router-controller: industries
@@ -328,7 +394,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}/education:
     post:
       x-swagger-router-controller: education
@@ -368,7 +434,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}/jobExperience:
     post:
       x-swagger-router-controller: jobExperience
@@ -410,7 +476,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /personality-evaluations:
     post:
       x-swagger-router-controller: personalityEvaluations
@@ -431,7 +497,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /personality-evaluations/{uuid}:
     get:
       x-swagger-router-controller: personalityEvaluations
@@ -451,7 +517,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
     put:
       x-swagger-router-controller: personalityEvaluations
       description: Gets an instance of a personality evaluation using the uuid
@@ -487,7 +553,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /user/{userId}/confirm:
     put:
       x-swagger-router-controller: users
@@ -518,7 +584,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /login:
     post:
       x-swagger-router-controller: users
@@ -547,7 +613,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /industries:
     get:
       x-swagger-router-controller: industries
@@ -561,7 +627,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /industrySectors:
     get:
       x-swagger-router-controller: industrySectors
@@ -575,11 +641,11 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /industrySectors/{industryId}:
     get:
       x-swagger-router-controller: industrySectors
-      description: Gets all of the industrySectors in the database
+      description: Get an individual industry sector's information
       operationId: getIndustrySectorsByIndustry
       parameters:
         - name: industryId
@@ -595,7 +661,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
   /skills:
     get:
       x-swagger-router-controller: skills
@@ -609,11 +675,25 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
+  /certifications:
+    get:
+      x-swagger-router-controller: certifications
+      description: Gets all of the certifications in the database
+      operationId: getAllCertifications
+      responses:
+        "200":
+          description: Successfully return all certifications
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /me:
     get:
       x-swagger-router-controller: users
-      description: Gets all of the skills in the database
+      description: Gets the user's information
       operationId: getMe
       responses:
         "200":
@@ -623,7 +703,7 @@ paths:
         "500":
           description: Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: "#/definitions/ErrorResponse"
 definitions:
   ErrorResponse:
     required:
@@ -633,8 +713,7 @@ definitions:
     properties:
       success:
         type: boolean
-      status: 
+      status:
         type: integer
       message:
         type: string
-        

@@ -5,14 +5,14 @@ const { issueToken } = require("./users");
 const {
   Applicant,
   User,
-  PersonalityEvaluations,
+  PersonalityEvaluation,
   JobExperience,
   EducationExperience,
   Industry,
   ApplicantSkill,
-  ApplicantIndustrySector,
   Skill,
-  IndustrySector
+  Certification,
+  ApplicantCertification
 } = db;
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
@@ -78,7 +78,7 @@ const createApplicant = asyncMiddleware(async (req, res, next) => {
   const [user, applicant, personalityEvaluation] = await Promise.all([
     User.create(newUserProps),
     Applicant.create(newApplicantProps),
-    PersonalityEvaluations.findOne({ where: { uuid } })
+    PersonalityEvaluation.findOne({ where: { uuid } })
   ]);
 
   await Promise.all([
@@ -90,7 +90,7 @@ const createApplicant = asyncMiddleware(async (req, res, next) => {
     include: [
       {
         model: Applicant,
-        include: [PersonalityEvaluations],
+        include: [PersonalityEvaluation],
         attributes: { exclude: ["password", "salt", "hashed_password"] }
       }
     ]
@@ -182,12 +182,12 @@ const updateApplicant = (req, res, next) => {
           {
             model: Applicant,
             include: [
-              PersonalityEvaluations,
+              PersonalityEvaluation,
               Industry,
               EducationExperience,
               JobExperience,
               { model: ApplicantSkill, include: [Skill] },
-              { model: ApplicantIndustrySector, include: [IndustrySector] }
+              { model: ApplicantCertification, include: [Certification] }
             ],
             attributes: { exclude: ["password", "salt", "hashed_password"] }
           }

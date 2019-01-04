@@ -3,10 +3,10 @@ const errorWithCode = require("../helpers/error");
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 const uuidv1 = require("uuid/v1");
 
-const { PersonalityEvaluations } = db;
+const { PersonalityEvaluation } = db;
 
 const createPersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
-  const personalityEvaluation = await PersonalityEvaluations.create({
+  const personalityEvaluation = await PersonalityEvaluation.create({
     uuid: uuidv1(),
     answers: [],
     currentQuestionIndex: 0,
@@ -23,7 +23,7 @@ const createPersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
 const getPersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
   const uuid = req.swagger.params.uuid.value;
 
-  const personalityEvaluation = await PersonalityEvaluations.findOne({
+  const personalityEvaluation = await PersonalityEvaluation.findOne({
     where: { uuid }
   });
   res.json({
@@ -36,7 +36,7 @@ const getPersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
 const updatePersonalityEvaluation = asyncMiddleware(async (req, res, next) => {
   const uuid = req.swagger.params.uuid.value;
   const { answers, currentQuestionIndex, scoreSignature, completed } = req.body;
-  const personalityEvaluation = await PersonalityEvaluations.findOne({
+  const personalityEvaluation = await PersonalityEvaluation.findOne({
     where: { uuid }
   });
 
