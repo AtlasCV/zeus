@@ -1,17 +1,11 @@
 {
   "extends": "airbnb-base",
   "rules": {
-      "import/newline-after-import": 0,
-      "no-confusing-arrow": ["error", {"allowParens": true}],
-      "comma-dangle": ["error", "never"]
+    "import/newline-after-import": 0,
+    "no-confusing-arrow": ["error", { "allowParens": true }],
+    "comma-dangle": ["error", "never"]
   },
-  "plugins": [
-      "import",
-      "jasmine",
-      "jsx-a11y",
-      "mocha",
-      "react"
-  ],
+  "plugins": ["jasmine", "mocha", "react"],
   "globals": {
     "describe": false,
     "it": false,
@@ -20,3 +14,4 @@
     "after": false,
     "afterEach": false
   }
+}

@@ -176,8 +176,9 @@ const updateApplicant = (req, res, next) => {
         user.updateAttributes(userProps)
       ]);
     })
-    .then(([applicant, user]) =>
-      applicant.getUser({
+    .then(([applicant]) => {
+      console.log("in here?", applicant);
+      return User.findById(applicant.UserId, {
         include: [
           {
             model: Applicant,
@@ -186,14 +187,13 @@ const updateApplicant = (req, res, next) => {
               Industry,
               EducationExperience,
               JobExperience,
-              { model: ApplicantSkill, include: [Skill] },
-              { model: ApplicantCertification, include: [Certification] }
+              { model: ApplicantSkill, include: [Skill] }
             ],
             attributes: { exclude: ["password", "salt", "hashed_password"] }
           }
         ]
-      })
-    )
+      });
+    })
     .then(user => {
       if (!user) {
         throw errorWithCode(

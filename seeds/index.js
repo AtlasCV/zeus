@@ -7,5 +7,5 @@ const { seedApplicants } = require("./applicantSeed");
 seedSkills()
   .then(() => seedCertifications())
   .then(() => seedIndustries())
-  .then(() => seedIndustrySectors())
-  .then(() => seedApplicants());
+  .then(() => seedIndustrySectors());
+// .then(() => seedApplicants());

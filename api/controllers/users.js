@@ -110,11 +110,11 @@ const getMe = asyncMiddleware(async (req, res, next) => {
         include: [
           PersonalityEvaluation,
           Industry,
+          Certification,
           EducationExperience,
           JobExperience,
           { model: ApplicantSkill, include: [Skill] },
-          { model: ApplicantIndustrySector, include: [IndustrySector] },
-          { model: ApplicantCertification, include: [Certification] }
+          { model: ApplicantIndustrySector, include: [IndustrySector] }
         ],
         attributes: { exclude: ["password", "salt", "hashed_password"] }
       }

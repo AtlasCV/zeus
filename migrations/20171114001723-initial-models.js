@@ -271,7 +271,7 @@ module.exports = {
             onUpdate: "cascade",
             onDelete: "cascade"
           },
-          Certificationid: {
+          CertificationId: {
             type: Sequelize.INTEGER,
             references: {
               model: "Certification",
@@ -380,7 +380,7 @@ module.exports = {
         queryInterface.addColumn("Match", "JobId", {
           type: Sequelize.INTEGER,
           references: {
-            model: "Jobs",
+            model: "Job",
             key: "id"
           },
           onUpdate: "cascade",

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
-    "PersonalityEvaluations",
+    "PersonalityEvaluation",
     {
       uuid: {
         type: DataTypes.STRING,
