@@ -234,7 +234,7 @@ paths:
     post:
       x-swagger-router-controller: certifications
       description: Adds a certification for an applicant
-      operationId: addSkillsToApplicant
+      operationId: addCertificationsToApplicant
       parameters:
         - name: applicantId
           in: path
@@ -269,7 +269,7 @@ paths:
     delete:
       x-swagger-router-controller: certifications
       description: removes a certification from an applicant
-      operationId: removeSkillFromApplicant
+      operationId: removeCertificationFromApplicant
       parameters:
         - name: applicantId
           in: path

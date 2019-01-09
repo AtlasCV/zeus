@@ -12,7 +12,8 @@ const {
   ApplicantSkill,
   Skill,
   Certification,
-  ApplicantCertification
+  IndustrySector,
+  ApplicantIndustrySector
 } = db;
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
@@ -187,7 +188,9 @@ const updateApplicant = (req, res, next) => {
               Industry,
               EducationExperience,
               JobExperience,
-              { model: ApplicantSkill, include: [Skill] }
+              Certification,
+              { model: ApplicantSkill, include: [Skill] },
+              { model: ApplicantIndustrySector, include: [IndustrySector] }
             ],
             attributes: { exclude: ["password", "salt", "hashed_password"] }
           }

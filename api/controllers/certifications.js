@@ -2,7 +2,7 @@ const Promise = require("bluebird");
 const db = require("../../models");
 const asyncMiddleware = require("../helpers/asyncMiddleware");
 
-const { Certification, ApplicantCertification } = db;
+const { Certification, ApplicantCertification, Applicant } = db;
 
 const getAllCertifications = (req, res, next) => {
   Certification.findAll()
@@ -20,10 +20,11 @@ const addCertificationsToApplicant = asyncMiddleware(async (req, res, next) => {
   const applicantId = req.swagger.params.applicantId.value;
   const { certification } = req.body;
 
-  const associatedCertification = await ApplicantCertification.create({
-    ApplicantId: applicantId,
-    CertificationId: certification.id
-  });
+  const applicantToAssociate = await Applicant.findById(applicantId);
+  const associatedCertification = await applicantToAssociate.addCertification(
+    certification.id
+  );
+
   res.json({
     successful: true,
     result: associatedCertification,
@@ -36,12 +37,8 @@ const removeCertificationFromApplicant = asyncMiddleware(
     const applicantId = req.swagger.params.applicantId.value;
     const { certificationId } = req.body;
 
-    await ApplicantCertification.destroy({
-      where: {
-        ApplicantId: applicantId,
-        CertificationId: certificationId
-      }
-    });
+    const applicantToAssociate = await Applicant.findById(applicantId);
+    await applicantToAssociate.removeCertification(certificationId);
 
     res.json({
       successful: true,
