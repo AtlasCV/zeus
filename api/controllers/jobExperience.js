@@ -30,6 +30,20 @@ const addJobExperienceToApplicant = asyncMiddleware(async (req, res, next) => {
   });
 });
 
+const removeJobExperienceFromApplicant = asyncMiddleware(
+  async (req, res, next) => {
+    const { jobExperienceId } = req.body;
+    const jobExperience = await JobExperience.findById(jobExperienceId);
+    await jobExperience.destroy();
+
+    res.json({
+      successful: true,
+      status: 204
+    });
+  }
+);
+
 module.exports = {
-  addJobExperienceToApplicant
+  addJobExperienceToApplicant,
+  removeJobExperienceFromApplicant
 };

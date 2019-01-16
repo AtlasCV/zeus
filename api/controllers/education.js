@@ -29,6 +29,18 @@ const addEducationToApplicant = asyncMiddleware(async (req, res, next) => {
   });
 });
 
+const removeEducationFromApplicant = asyncMiddleware(async (req, res, next) => {
+  const { educationId } = req.body;
+  const education = await EducationExperience.findById(educationId);
+  await education.destroy();
+
+  res.json({
+    successful: true,
+    status: 204
+  });
+});
+
 module.exports = {
-  addEducationToApplicant
+  addEducationToApplicant,
+  removeEducationFromApplicant
 };

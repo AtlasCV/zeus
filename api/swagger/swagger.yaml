@@ -435,6 +435,36 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    delete:
+      x-swagger-router-controller: education
+      description: deletes a education
+      operationId: removeEducationFromApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create education for an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - educationId
+            properties:
+              educationId:
+                type: number
+      responses:
+        "201":
+          description: Successfully create and associate job experience with applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /applicants/{applicantId}/jobExperience:
     post:
       x-swagger-router-controller: jobExperience
@@ -471,6 +501,36 @@ paths:
       responses:
         "201":
           description: Successfully create and associate job experience with applicant
+          schema:
+            type: object
+        "500":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      x-swagger-router-controller: jobExperience
+      description: deletes a job experience
+      operationId: removeJobExperienceFromApplicant
+      parameters:
+        - name: applicantId
+          in: path
+          description: id of the applicant's skills being added
+          required: true
+          type: string
+        - name: data
+          in: body
+          description: data required to create job experience for an applicant
+          required: true
+          schema:
+            type: object
+            required:
+              - jobExperienceId
+            properties:
+              jobExperienceId:
+                type: number
+      responses:
+        "204":
+          description: Successfully deletes a job experience
           schema:
             type: object
         "500":
