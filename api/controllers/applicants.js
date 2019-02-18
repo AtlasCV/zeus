@@ -21,7 +21,7 @@ const secret = process.env.APP_JWT_SECRET || "this is a temp secret string";
 
 const getAllApplicants = (req, res, next) => {
   Applicant.findAll({
-    include: [User],
+    include: [User, JobExperience],
     attributes: { exclude: ["salt", "hashedPassword"] }
   })
     .then(applicants => {
@@ -37,7 +37,16 @@ const getAllApplicants = (req, res, next) => {
 const getApplicantById = (req, res, next) => {
   const applicantId = req.swagger.params.applicantId.value;
   Applicant.findById(applicantId, {
-    include: [User],
+    include: [
+      User,
+      PersonalityEvaluation,
+      Industry,
+      Certification,
+      EducationExperience,
+      JobExperience,
+      { model: ApplicantSkill, include: [Skill] },
+      { model: ApplicantIndustrySector, include: [IndustrySector] }
+    ],
     attributes: { exclude: ["salt", "hashedPassword"] }
   })
     .then(applicant => {
