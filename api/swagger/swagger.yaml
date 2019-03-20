@@ -537,37 +537,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /applicants/{applicantId}/profile-picture:
-    post:
-      x-swagger-router-controller: applicants
-      description: Adds a profile picture to a user
-      operationId: addProfilePictureToApplicant
-      parameters:
-        - name: applicantId
-          in: path
-          description: id of the applicant's skills being added
-          required: true
-          type: string
-        - name: data
-          in: body
-          description: image file
-          required: true
-          schema:
-            type: object
-            required:
-              - image
-            properties:
-              image:
-                type: object
-      responses:
-        "201":
-          description: Successfully create and associate job experience with applicant
-          schema:
-            type: object
-        "500":
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /personality-evaluations:
     post:
       x-swagger-router-controller: personalityEvaluations

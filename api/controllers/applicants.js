@@ -187,6 +187,7 @@ const updateApplicant = (req, res, next) => {
       ]);
     })
     .then(([applicant]) => {
+      console.log("in here?", applicant);
       return User.findById(applicant.UserId, {
         include: [
           {
@@ -217,23 +218,9 @@ const updateApplicant = (req, res, next) => {
     .catch(next);
 };
 
-const addProfilePictureToApplicant = asyncMiddleware(async (req, res, next) => {
-  console.log(req.swagger.params.data.value);
-  console.log(req.swagger.params.applicantId.value);
-
-  res.json({
-    successful: true,
-    result: {
-      yo: "yo"
-    },
-    status: 201
-  });
-});
-
 module.exports = {
   getAllApplicants,
   getApplicantById,
   createApplicant,
-  updateApplicant,
-  addProfilePictureToApplicant
+  updateApplicant
 };
