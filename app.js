@@ -97,14 +97,10 @@ if (env === "test") {
      */
     if (env === "production" || env === "stage") {
       const clientCertificateAuth = require("client-certificate-auth");
-
       swaggerExpress.register(app);
-
       app.use(customSwaggerErrorHandler);
-      const httpsServer = https.createServer({}, app);
-
       db.didSync.then(() => {
-        httpsServer.listen(port);
+        app.listen(port);
       });
     } else {
       swaggerExpress.register(app);
