@@ -105,10 +105,11 @@ db.Sequelize = Sequelize;
 
 function sync(force) {
   const syncOrAuthenticate =
-    env === "test" || env === "circle_test"
-      ? db.sequelize.sync({ force })
-      : db.sequelize.authenticate();
+    // env === "test" || env === "circle_test"
+    //   ? db.sequelize.sync({ force })
+    //   : db.sequelize.authenticate();
 
+    db.sequelize.sync({ force });
   return syncOrAuthenticate
     .then(() =>
       console.log(
