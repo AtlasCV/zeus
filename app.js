@@ -6,6 +6,7 @@ const db = require("./models");
 const volleyball = require("volleyball");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { seedDb } = require("./seeds");
 
 // const swaggerSecurityHandlers = require('./config/security');
 
@@ -99,9 +100,13 @@ if (env === "test") {
       const clientCertificateAuth = require("client-certificate-auth");
       swaggerExpress.register(app);
       app.use(customSwaggerErrorHandler);
-      db.didSync.then(() => {
-        app.listen(port);
-      });
+      db.didSync
+        .then(() => {
+          return seedDb();
+        })
+        .then(() => {
+          app.listen(port);
+        });
     } else {
       swaggerExpress.register(app);
       app.use(customSwaggerErrorHandler);

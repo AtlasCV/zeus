@@ -4,8 +4,13 @@ const { seedIndustrySectors } = require("./industrySectorSeed");
 const { seedSkills } = require("./skillSeed");
 const { seedApplicants } = require("./applicantSeed");
 
-seedSkills()
-  .then(() => seedCertifications())
-  .then(() => seedIndustries())
-  .then(() => seedIndustrySectors());
+const seedDb = () =>
+  seedSkills()
+    .then(() => seedCertifications())
+    .then(() => seedIndustries())
+    .then(() => seedIndustrySectors());
 // .then(() => seedApplicants());
+
+seedDb();
+
+module.exports = { seedDb };
