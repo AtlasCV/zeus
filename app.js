@@ -31,21 +31,21 @@ const allowedOrigins = [
 
 const whitelist = allowedOrigins;
 
-const corsOptions = {
-  origin: function(origin, callback) {
-    if (!origin) {
-      callback(null, true);
-    } else if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  allowedHeaders: ["Content-Type", "Authorization"],
-  methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"]
-};
+// const corsOptions = {
+//   origin: function(origin, callback) {
+//     if (!origin) {
+//       callback(null, true);
+//     } else if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"]
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 function customSwaggerErrorHandler(err, req, res, next) {
   if (env === "test") console.error(err);
