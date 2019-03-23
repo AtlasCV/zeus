@@ -8,12 +8,24 @@ const env = process.env.NODE_ENV || "development";
 const config = require("../config/config.js")[env];
 const db = {};
 
-const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config
-);
+let sequelize;
+if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
+  // the application is executed on Heroku ... use the postgres database
+  sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+    dialect: "postgres",
+    protocol: "postgres",
+    port: match[4],
+    host: match[3],
+    logging: true //false
+  });
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
+}
 
 fs.readdirSync(__dirname)
   .filter(function(file) {
