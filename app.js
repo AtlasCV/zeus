@@ -101,7 +101,7 @@ if (env === "test") {
       swaggerExpress.register(app);
 
       app.use(customSwaggerErrorHandler);
-      const httpsServer = https.createServer(SSLOptions, app);
+      const httpsServer = https.createServer({}, app);
 
       db.didSync.then(() => {
         httpsServer.listen(port);
