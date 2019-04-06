@@ -35,6 +35,15 @@ module.exports = (sequelize, DataTypes) =>
       currentPageOfSignup: {
         type: DataTypes.INTEGER,
         defaultValue: 1
+      },
+      website: {
+        type: DataTypes.STRING
+      },
+      resumeUrl: {
+        type: DataTypes.STRING
+      },
+      videoUrl: {
+        type: DataTypes.STRING
       }
     },
     { freezeTableName: true }

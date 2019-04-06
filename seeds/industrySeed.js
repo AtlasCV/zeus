@@ -7,7 +7,9 @@ const seedData = [
   { name: "Finance" },
   { name: "Accounting" },
   { name: "Insurance" },
-  { name: "Human Resources" }
+  { name: "Human Resources" },
+  { name: "Business Administration" },
+  { name: "Advertising" }
 ];
 
 const seedIndustries = () =>
