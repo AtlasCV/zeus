@@ -18,9 +18,6 @@ module.exports = {
     dialect: "postgres"
   },
   production: {
-    username: "root",
-    password: "superroot",
-    database: "postgres",
     host: process.env.DATABASE_URL,
     port: "5432",
     logging: false,
