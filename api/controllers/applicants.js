@@ -144,7 +144,9 @@ const updateApplicant = (req, res, next) => {
     linkedIn,
     jobType,
     currentPageOfSignup,
-    signupComplete
+    signupComplete,
+    resumeUrl,
+    website
   } = req.swagger.params.data.value;
   const applicantId = req.swagger.params.applicantId.value;
 
@@ -170,7 +172,9 @@ const updateApplicant = (req, res, next) => {
         jobType: jobType || applicant.jobType,
         currentPageOfSignup:
           currentPageOfSignup || applicant.currentPageOfSignup,
-        signupComplete: signupComplete || applicant.signupComplete
+        signupComplete: signupComplete || applicant.signupComplete,
+        resumeUrl: resumeUrl || applicant.resumeUrl,
+        website: website || applicant.website
       };
       const userProps = {
         firstName: firstName || user.firstName,
