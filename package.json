@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "bluebird": "^3.5.4",
     "client-certificate-auth": "^0.3.0",
     "cors": "^2.8.5",
