@@ -21,7 +21,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.23",
     "pg": "^6.4.2",
